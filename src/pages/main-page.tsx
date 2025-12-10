@@ -1,11 +1,11 @@
-import { AppHeader } from '@components/app-header/app-header';
-import { BurgerConstructor } from '@components/burger-constructor/burger-constructor';
-import { BurgerIngredients } from '@components/burger-ingredients/burger-ingredients';
-import { ingredients } from '@utils/ingredients';
-
+import { AppHeader } from '@/shared/ui/app-header/app-header.tsx';
+import { BurgerConstructor } from '@/features/burger-constructor/burger-constructor.tsx';
+import { BurgerIngredients } from '@/features/burger-ingredients/burger-ingredients.tsx';
+import { ingredients } from '@/shared/utils/ingredients.ts';
 import styles from './app.module.css';
+import type { JSX } from 'react';
 
-export const App = (): React.JSX.Element => {
+export const MainPage = (): JSX.Element => {
   return (
     <div className={styles.app}>
       <AppHeader />
@@ -20,4 +20,4 @@ export const App = (): React.JSX.Element => {
   );
 };
 
-export default App;
+export default MainPage;

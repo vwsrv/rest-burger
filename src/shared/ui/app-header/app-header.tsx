@@ -13,7 +13,7 @@ export const AppHeader = (): React.JSX.Element => {
       <nav className={`${styles.menu} p-4`}>
         <div className={styles.menu_part_left}>
           {/* Тут должны быть ссылки, а не например кнопки или абзацы */}
-          <a href="/" className={`${styles.link} ${styles.link_active}`}>
+          <a href="/public" className={`${styles.link} ${styles.link_active}`}>
             <BurgerIcon type="primary" />
             <p className="text text_type_main-default ml-2">Конструктор</p>
           </a>

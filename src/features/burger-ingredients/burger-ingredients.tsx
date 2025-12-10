@@ -1,23 +1,20 @@
-import { Tab } from '@krgaa/react-developer-burger-ui-components';
-
-import type { TIngredient } from '@utils/types';
-
+import type { IngredientDTO } from '@/entities/ingridients/models/dto';
 import styles from './burger-ingredients.module.css';
+import { UITab } from '@/shared/ui/tab';
+import type { FC } from 'react';
 
-type TBurgerIngredientsProps = {
-  ingredients: TIngredient[];
+type TProps = {
+  ingredients: IngredientDTO[];
 };
 
-export const BurgerIngredients = ({
-  ingredients,
-}: TBurgerIngredientsProps): React.JSX.Element => {
+export const BurgerIngredients: FC<TProps> = ({ ingredients }) => {
   console.log(ingredients);
 
   return (
     <section className={styles.burger_ingredients}>
       <nav>
         <ul className={styles.menu}>
-          <Tab
+          <UITab
             value="bun"
             active={true}
             onClick={() => {
@@ -25,8 +22,8 @@ export const BurgerIngredients = ({
             }}
           >
             Булки
-          </Tab>
-          <Tab
+          </UITab>
+          <UITab
             value="main"
             active={false}
             onClick={() => {
@@ -34,8 +31,8 @@ export const BurgerIngredients = ({
             }}
           >
             Начинки
-          </Tab>
-          <Tab
+          </UITab>
+          <UITab
             value="sauce"
             active={false}
             onClick={() => {
@@ -43,7 +40,7 @@ export const BurgerIngredients = ({
             }}
           >
             Соусы
-          </Tab>
+          </UITab>
         </ul>
       </nav>
     </section>
