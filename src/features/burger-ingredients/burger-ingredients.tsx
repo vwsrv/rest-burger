@@ -1,5 +1,5 @@
 import type { FC } from 'react';
-import BurgerTabs from '@/features/burger-ingredients/ui/tabs.tsx';
+import BurgerTabs from '@/features/burger-ingredients/ui/tabs/tabs.tsx';
 import { tabsTuple } from '@/entities/ingridients';
 
 export const BurgerIngredients: FC = () => {

@@ -1,0 +1,41 @@
+import type { FC } from 'react';
+import { UIBox } from '@/shared/ui/box';
+import { CurrencyIcon } from '@krgaa/react-developer-burger-ui-components';
+import { UICounter } from '@/shared/ui/counter';
+
+import styles from './card.module.css';
+
+type TProps = {
+  image: string;
+  cost: string;
+  count: number;
+  title: string;
+  currencyTheme: 'primary' | 'secondary' | 'error' | 'success';
+};
+
+export const UICard: FC<TProps> = ({
+  image,
+  cost,
+  count,
+  title,
+  currencyTheme = 'primary',
+  ...props
+}) => {
+  return (
+    <UIBox className={styles.card} {...props}>
+      <img src={image} alt={title} />
+
+      <UICounter size="default" count={count} extraClass={styles.counter} />
+
+      <div className={styles.card__price}>
+        <p className="text text_type_digits-medium">{cost}</p>
+
+        <CurrencyIcon type={currencyTheme} />
+      </div>
+
+      <h2 className="text text_type_main-medium">{title}</h2>
+    </UIBox>
+  );
+};
+
+export default UICard;

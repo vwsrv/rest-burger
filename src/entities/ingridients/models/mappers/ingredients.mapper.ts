@@ -1,6 +1,6 @@
 import type { IngredientDTO } from '@/entities/ingridients/models/dto';
 import type { TIngredientsResponse } from '@/entities/ingridients/models/types';
-import type { TIngredient } from '@/entities/ingridients/models/types/ingredient.type.ts';
+import type { TIngredientItem } from '@/entities/ingridients/models/types/ingredient-item.type.ts';
 
 export const ingredientsMapper = (dto: IngredientDTO) => {
   return {
@@ -19,7 +19,7 @@ export const ingredientsMapper = (dto: IngredientDTO) => {
   };
 };
 
-export const ingredientMapper = (response: TIngredientsResponse): TIngredient[] => {
+export const ingredientMapper = (response: TIngredientsResponse): TIngredientItem[] => {
   if (!response || (response && 'error' in response)) return [];
 
   return response.data.map(ingredientsMapper);

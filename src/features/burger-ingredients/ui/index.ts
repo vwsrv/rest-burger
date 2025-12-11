@@ -1,1 +1,1 @@
-export { default as BurgerTabs } from './tabs';
+export * from './tabs';
