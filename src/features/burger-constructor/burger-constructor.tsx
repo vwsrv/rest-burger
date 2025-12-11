@@ -1,13 +1,6 @@
-import type { IngredientDTO } from '@/entities/ingridients/models/dto';
-import styles from './burger-constructor.module.css';
+import styles from '../../widgets/left-side/left-side.module.css';
 import type { FC } from 'react';
 
-type TProps = {
-  ingredients: IngredientDTO[];
-};
-
-export const BurgerConstructor: FC<TProps> = ({ ingredients }) => {
-  console.log(ingredients);
-
-  return <section className={styles.burger_constructor}></section>;
+export const BurgerConstructor: FC = () => {
+  return <div className={styles.burger_constructor}>TODO</div>;
 };

@@ -7,5 +7,4 @@ declare const classNames: {
   readonly link_position_last: 'link_position_last';
   readonly logo: 'logo';
 };
-
 export default classNames;
