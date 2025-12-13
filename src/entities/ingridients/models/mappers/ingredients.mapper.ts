@@ -11,7 +11,7 @@ export const ingredientsMapper = (dto: IngredientDTO) => {
     fat: dto.fat,
     card: dto.carbohydrates,
     cal: dto.calories,
-    price: dto.price,
+    price: String(dto.price),
     image: dto.image,
     imageLg: dto.image_large,
     imageMb: dto.image_mobile,

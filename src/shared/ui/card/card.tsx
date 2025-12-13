@@ -23,17 +23,17 @@ export const UICard: FC<TProps> = ({
 }) => {
   return (
     <UIBox className={styles.card} {...props}>
-      <img src={image} alt={title} />
+      <img src={image} alt={title} className={styles.card__img} />
 
       <UICounter size="default" count={count} extraClass={styles.counter} />
 
       <div className={styles.card__price}>
-        <p className="text text_type_digits-medium">{cost}</p>
+        <p className={`text text_type_digits-medium ${styles.card__price}`}>{cost}</p>
 
         <CurrencyIcon type={currencyTheme} />
       </div>
 
-      <h2 className="text text_type_main-medium">{title}</h2>
+      <h2 className="text text_type_main-default">{title}</h2>
     </UIBox>
   );
 };

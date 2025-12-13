@@ -1,9 +1,28 @@
-import type { TIngredientItem } from '@/entities/ingridients';
+import {
+  tabsTuple,
+  type TIngredientGroup,
+  type TIngredientItem,
+  type TIngredientKind,
+} from '@/entities/ingridients';
+import { groupBy } from '@/shared/utils/group.by.util.ts';
 
-export const groupIngredientsByType = (ingredients: TIngredientItem[]) => {
-  return {
-    bun: ingredients.filter((ingredient) => ingredient.type === 'bun'),
-    sauce: ingredients.filter((ingredient) => ingredient.type === 'sauce'),
-    main: ingredients.filter((ingredient) => ingredient.type === 'main'),
+export const groupIngredients = (ingredients: TIngredientItem[]): TIngredientGroup[] => {
+  const grouped = groupBy(ingredients, 'type') as Record<
+    TIngredientKind,
+    TIngredientItem[]
+  >;
+
+  const typeToLabel: Record<TIngredientKind, string> = {
+    bun: tabsTuple[0].label,
+    sauce: tabsTuple[1].label,
+    main: tabsTuple[2].label,
   };
+
+  const types: TIngredientKind[] = ['bun', 'sauce', 'main'];
+
+  return types.map((type) => ({
+    type,
+    label: typeToLabel[type],
+    items: grouped[type] || [],
+  }));
 };
