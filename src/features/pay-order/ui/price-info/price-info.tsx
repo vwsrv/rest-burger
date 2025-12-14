@@ -7,7 +7,7 @@ type TProps = {
   type?: 'primary' | 'secondary' | 'error' | 'success';
 };
 
-const PriceInfo: FC<TProps> = ({ price, type = 'primary' }) => {
+export const PriceInfo: FC<TProps> = ({ price, type = 'primary' }) => {
   return (
     <div className={styles.price__info}>
       <p className="text text_type_digits-medium">{price}</p>
@@ -16,5 +16,3 @@ const PriceInfo: FC<TProps> = ({ price, type = 'primary' }) => {
     </div>
   );
 };
-
-export default PriceInfo;

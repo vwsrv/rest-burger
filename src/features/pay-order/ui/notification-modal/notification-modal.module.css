@@ -1,0 +1,31 @@
+.notification__container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--spacing-15);
+  padding: var(--spacing-30) 0 var(--spacing-30);
+  text-align: center;
+}
+
+.notification__title {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-8);
+}
+
+.notification__order_id {
+  text-shadow:
+    0 0 16px #4c4cff,
+    0 0 32px #4c4cff,
+    0 0 48px #4c4cff;
+}
+
+.notification__description {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-2);
+}
+
+.description_action {
+  color: #8585ad;
+}
