@@ -1,7 +1,5 @@
-.burger_constructor {
+.left__side {
   display: flex;
   flex-direction: column;
-  width: 600px;
-  padding-bottom: 20px;
-  color: var(--text-primary-color);
+  height: 100%;
 }

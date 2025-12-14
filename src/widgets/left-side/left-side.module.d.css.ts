@@ -1,4 +1,4 @@
 declare const classNames: {
-  readonly burger_constructor: 'burger_constructor';
+  readonly left__side: 'left__side';
 };
 export default classNames;

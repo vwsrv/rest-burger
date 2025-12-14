@@ -1,4 +1,4 @@
 declare const classNames: {
-  readonly right__side: 'right__side';
+  readonly price__info: 'price__info';
 };
 export default classNames;

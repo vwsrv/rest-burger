@@ -13,6 +13,7 @@ export const MainPage = (): JSX.Element => {
       </h1>
       <main className={`${styles.main} pl-5 pr-5`}>
         <LeftSide />
+
         <RightSide />
       </main>
     </div>

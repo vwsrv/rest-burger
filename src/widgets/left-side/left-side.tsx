@@ -4,8 +4,8 @@ import { BurgerIngredients } from '@/features/burger-ingredients/burger-ingredie
 
 export const LeftSide: FC = () => {
   return (
-    <section className={styles.burger_constructor}>
+    <aside className={styles.left__side}>
       <BurgerIngredients />
-    </section>
+    </aside>
   );
 };
