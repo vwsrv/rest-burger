@@ -5,10 +5,9 @@ import {
   tabsTuple,
   type TIngredientGroup,
 } from '@/entities/ingridients';
-import { UICard } from '@/shared/ui/card';
-import { UIBox } from '@/shared/ui/box';
 import styles from './burger-ingredients.module.css';
 import { groupIngredients } from '@/entities/ingridients/utils/group-ingredients.util.ts';
+import { UIBox, UICard } from '@/shared/ui';
 
 export const BurgerIngredients: FC = () => {
   const [ingredients, setIngredients] = useState<TIngredientGroup[]>([]);

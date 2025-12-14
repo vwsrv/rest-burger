@@ -1,9 +1,8 @@
 import type { FC } from 'react';
-import { UIBox } from '@/shared/ui/box';
 import { CurrencyIcon } from '@krgaa/react-developer-burger-ui-components';
-import { UICounter } from '@/shared/ui/counter';
 
 import styles from './card.module.css';
+import { UIBox, UICounter } from '@/shared/ui';
 
 type TProps = {
   image: string;

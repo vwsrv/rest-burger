@@ -1,1 +1,1 @@
-export { default as UIFormattedDate } from './formatted-date';
+export { default } from './formatted-date';

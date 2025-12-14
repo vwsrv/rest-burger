@@ -1,7 +1,7 @@
-import { UITab } from '@/shared/ui/tab';
 import styles from './tabs.module.css';
 import type { TTab } from '@/features/burger-ingredients/models/types';
 import type { FC } from 'react';
+import { UITab } from '@/shared/ui';
 
 type TProps = {
   tabs: TTab[];

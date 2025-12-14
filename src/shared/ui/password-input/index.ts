@@ -1,1 +1,1 @@
-export { default as UIPasswordInput } from './password-input';
+export { default } from './password-input';

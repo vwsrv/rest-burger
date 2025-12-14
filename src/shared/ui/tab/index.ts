@@ -1,1 +1,1 @@
-export { default as UITab } from './tab';
+export { default } from './tab';

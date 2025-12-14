@@ -2,9 +2,8 @@ import styles from './burger-constructor.module.css';
 import { type FC, useEffect, useState } from 'react';
 import { getIngredientsData, type TIngredientGroup } from '@/entities/ingridients';
 import { groupIngredients } from '@/entities/ingridients/utils/group-ingredients.util.ts';
-import { UIConstructorElement } from '@/shared/ui/constructor-element';
-import { UIBox } from '@/shared/ui/box';
 import { DragIcon } from '@krgaa/react-developer-burger-ui-components';
+import { UIBox, UIConstructorElement } from '@/shared/ui';
 
 export const BurgerConstructor: FC = () => {
   const [ingredients, setIngredients] = useState<TIngredientGroup[]>([]);

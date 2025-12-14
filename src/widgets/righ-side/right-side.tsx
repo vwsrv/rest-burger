@@ -1,8 +1,6 @@
 import type { FC } from 'react';
 import styles from './right-side.module.css';
-
-import { BurgerConstructor } from '@/features/burger-constructor/burger-constructor.tsx';
-import PayOrder from '@/features/pay-order/pay-order.tsx';
+import { BurgerConstructor, PayOrder } from '@/features';
 
 export const RightSide: FC = () => {
   return (

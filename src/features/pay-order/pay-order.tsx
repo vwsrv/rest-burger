@@ -1,9 +1,9 @@
 import type { FC } from 'react';
 import PriceInfo from './ui/price-info';
-import { UIButton } from '@/shared/ui/button';
 import styles from './pay-order.module.css';
+import { UIButton } from '@/shared/ui';
 
-const PayOrder: FC = () => {
+export const PayOrder: FC = () => {
   const PRICE = 78347;
 
   return (
@@ -21,5 +21,3 @@ const PayOrder: FC = () => {
     </div>
   );
 };
-
-export default PayOrder;

@@ -1,1 +1,1 @@
-export { default as UIEmailInput } from './email-input';
+export { default } from './email-input';

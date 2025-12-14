@@ -1,4 +1,4 @@
-import { AppHeader } from '@/shared/ui/app-header/app-header.tsx';
+import { AppHeader } from '@/widgets/app-header/app-header.tsx';
 import styles from './app.module.css';
 import type { JSX } from 'react';
 import { LeftSide } from '@/widgets/left-side/left-side.tsx';
