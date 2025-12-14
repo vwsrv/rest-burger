@@ -1,5 +1,5 @@
-import { type FC, useEffect, useState } from 'react';
-import BurgerTabs from '@/features/burger-ingredients/ui/tabs/tabs.tsx';
+import { type FC, useEffect, useMemo, useState } from 'react';
+import { BurgerTabs, IngredientsDetailsModal } from './ui';
 import {
   getIngredientsData,
   tabsTuple,
@@ -11,6 +11,18 @@ import { UIBox, UICard } from '@/shared/ui';
 
 export const BurgerIngredients: FC = () => {
   const [ingredients, setIngredients] = useState<TIngredientGroup[]>([]);
+  const [selected, setSelected] = useState<string | null>(null);
+
+  const selectIngredient = useMemo(() => {
+    if (!selected) {
+      return null;
+    }
+
+    return (
+      ingredients.flatMap((group) => group.items).find((item) => item.id === selected) ??
+      null
+    );
+  }, [ingredients, selected]);
 
   useEffect(() => {
     void getIngredientsData().then(groupIngredients).then(setIngredients);
@@ -36,12 +48,18 @@ export const BurgerIngredients: FC = () => {
                   count={3}
                   title={ingredient.name}
                   currencyTheme="primary"
+                  onClick={() => setSelected(ingredient.id)}
                 />
               ))}
             </div>
           </div>
         ))}
       </UIBox>
+
+      <IngredientsDetailsModal
+        ingredient={selectIngredient}
+        onClose={() => setSelected(null)}
+      />
     </div>
   );
 };

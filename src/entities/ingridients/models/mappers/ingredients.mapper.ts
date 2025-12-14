@@ -9,7 +9,7 @@ export const ingredientsMapper = (dto: IngredientDTO) => {
     type: dto.type,
     proteins: dto.proteins,
     fat: dto.fat,
-    card: dto.carbohydrates,
+    carb: dto.carbohydrates,
     cal: dto.calories,
     price: String(dto.price),
     image: dto.image,

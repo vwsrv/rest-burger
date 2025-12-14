@@ -10,6 +10,7 @@ type TProps = {
   count: number;
   title: string;
   currencyTheme: 'primary' | 'secondary' | 'error' | 'success';
+  onClick?: () => void;
 };
 
 export const UICard: FC<TProps> = ({
@@ -17,14 +18,17 @@ export const UICard: FC<TProps> = ({
   cost,
   count,
   title,
+  onClick,
   currencyTheme = 'primary',
   ...props
 }) => {
   return (
-    <UIBox className={styles.card} {...props}>
-      <img src={image} alt={title} className={styles.card__img} />
+    <UIBox className={styles.card} {...props} onClick={onClick}>
+      <div className={styles.card__img_wrapper}>
+        <img src={image} alt={title} className={styles.card__img} />
 
-      <UICounter size="default" count={count} extraClass={styles.counter} />
+        <UICounter size="default" count={count} extraClass={styles.counter} />
+      </div>
 
       <div className={styles.card__price}>
         <p className={`text text_type_digits-medium ${styles.card__price}`}>{cost}</p>
