@@ -1,9 +1,8 @@
-import { AppHeader } from '@/shared/ui/app-header/app-header.tsx';
-import { BurgerConstructor } from '@/features/burger-constructor/burger-constructor.tsx';
-import { BurgerIngredients } from '@/features/burger-ingredients/burger-ingredients.tsx';
-import { ingredients } from '@/shared/utils/ingredients.ts';
+import { AppHeader } from '@/widgets/app-header/app-header.tsx';
 import styles from './app.module.css';
 import type { JSX } from 'react';
+import { LeftSide } from '@/widgets/left-side/left-side.tsx';
+import { RightSide } from '@/widgets/righ-side/right-side.tsx';
 
 export const MainPage = (): JSX.Element => {
   return (
@@ -13,8 +12,9 @@ export const MainPage = (): JSX.Element => {
         Соберите бургер
       </h1>
       <main className={`${styles.main} pl-5 pr-5`}>
-        <BurgerIngredients ingredients={ingredients} />
-        <BurgerConstructor ingredients={ingredients} />
+        <LeftSide />
+
+        <RightSide />
       </main>
     </div>
   );

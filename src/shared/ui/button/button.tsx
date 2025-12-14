@@ -7,7 +7,7 @@ type TProps = {
   type: 'secondary' | 'primary' | undefined;
   size: 'small' | 'medium' | 'large' | undefined;
   onClick: (() => void) | ((e: SyntheticEvent<Element, Event>) => void) | undefined;
-  className: string | undefined;
+  className?: string | undefined;
   htmlType: 'button' | 'submit' | 'reset';
 };
 

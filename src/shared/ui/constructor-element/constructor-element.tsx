@@ -1,26 +1,29 @@
 import { ConstructorElement } from '@krgaa/react-developer-burger-ui-components';
 
-import type { IngredientDTO } from '@/entities/ingridients/models/dto';
 import type { FC } from 'react';
 
 type TProps = {
-  ingredient: IngredientDTO;
+  text: string;
+  price: number;
+  image: string;
   type?: 'top' | 'bottom';
   isLocked?: boolean;
   handleClose?: () => void;
 };
 
 const UIConstructorElement: FC<TProps> = ({
-  ingredient,
+  text,
+  price,
+  image,
   type,
   isLocked,
   handleClose,
 }) => {
   return (
     <ConstructorElement
-      text={ingredient.name}
-      price={ingredient.price}
-      thumbnail={ingredient.image}
+      text={text}
+      price={price}
+      thumbnail={image}
       type={type}
       isLocked={isLocked}
       handleClose={handleClose}

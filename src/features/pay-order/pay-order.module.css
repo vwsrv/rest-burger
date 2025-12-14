@@ -1,0 +1,8 @@
+.pay__order {
+  display: flex;
+  flex-shrink: 0;
+  justify-content: end;
+  gap: var(--spacing-10);
+  padding-right: var(--spacing-2);
+  place-items: center center;
+}

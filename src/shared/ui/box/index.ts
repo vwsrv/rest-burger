@@ -1,1 +1,1 @@
-export { default as UIBox } from './box';
+export { default } from './box';
