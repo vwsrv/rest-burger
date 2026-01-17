@@ -1,22 +1,21 @@
 import { type FC, useEffect, useMemo, useState } from 'react';
 import { BurgerTabs, IngredientsDetailsModal } from './ui';
-import {
-  getIngredientsData,
-  tabsTuple,
-  type TIngredientGroup,
-} from '@/entities/ingridients';
+import { tabsTuple } from '@/entities/ingridients';
 import styles from './burger-ingredients.module.css';
-import { groupIngredients } from '@/entities/ingridients/utils/group-ingredients.util.ts';
 import { UIBox, UICard } from '@/shared/ui';
+import {
+  getIngredients,
+  selectIngredients,
+} from '@/app/store/slices/ingredients/ingredients.slice.ts';
+import { useAppDispatch, useAppSelector } from '@/app/store';
 
 export const BurgerIngredients: FC = () => {
-  const [ingredients, setIngredients] = useState<TIngredientGroup[]>([]);
+  const dispatch = useAppDispatch();
+  const ingredients = useAppSelector(selectIngredients);
   const [selected, setSelected] = useState<string | null>(null);
 
   const selectIngredient = useMemo(() => {
-    if (!selected) {
-      return null;
-    }
+    if (!selected) return null;
 
     return (
       ingredients.flatMap((group) => group.items).find((item) => item.id === selected) ??
@@ -25,8 +24,8 @@ export const BurgerIngredients: FC = () => {
   }, [ingredients, selected]);
 
   useEffect(() => {
-    void getIngredientsData().then(groupIngredients).then(setIngredients);
-  }, []);
+    dispatch(getIngredients());
+  }, [dispatch]);
 
   return (
     <div className={styles.burger_ingredients}>
