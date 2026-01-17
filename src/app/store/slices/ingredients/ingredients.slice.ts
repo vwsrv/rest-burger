@@ -1,19 +1,20 @@
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import { createAsyncThunk, createSlice, type PayloadAction } from '@reduxjs/toolkit';
 import {
   getIngredientsData,
   groupIngredients,
   type TIngredientGroup,
 } from '@/entities/ingridients';
-import type { TRootState } from '@/app/store';
 
 type TIngredientsState = {
   items: TIngredientGroup[] | [];
+  activeTab: string | null;
   loading: boolean;
   error: string | null;
 };
 
 const initialState: TIngredientsState = {
   items: [],
+  activeTab: null,
   loading: false,
   error: null,
 };
@@ -28,6 +29,9 @@ const ingredientsSlice = createSlice({
   reducers: {
     setIngredients: (state, action): void => {
       state.items = action.payload;
+    },
+    setActiveTab: (state, action: PayloadAction<string | null>): void => {
+      state.activeTab = action.payload;
     },
   },
   extraReducers: (builder) => {
@@ -49,8 +53,4 @@ const ingredientsSlice = createSlice({
 });
 
 export default ingredientsSlice.reducer;
-export const { setIngredients } = ingredientsSlice.actions;
-export const selectIngredients = ({ ingredients: { items } }: TRootState) => items;
-export const selectIngredientsLoading = ({ ingredients: { loading } }: TRootState) =>
-  loading;
-export const selectIngredientsError = ({ ingredients: { error } }: TRootState) => error;
+export const { setIngredients, setActiveTab } = ingredientsSlice.actions;

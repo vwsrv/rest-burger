@@ -1,27 +1,60 @@
-import { type FC, useEffect, useMemo, useState } from 'react';
+import { type FC, useEffect, useRef } from 'react';
 import { BurgerTabs, IngredientsDetailsModal } from './ui';
 import { tabsTuple } from '@/entities/ingridients';
 import styles from './burger-ingredients.module.css';
 import { UIBox, UICard } from '@/shared/ui';
 import {
   getIngredients,
-  selectIngredients,
+  setActiveTab,
 } from '@/app/store/slices/ingredients/ingredients.slice.ts';
+import {
+  clearIngredientItem,
+  setIngredientItem,
+} from '@/app/store/slices/current-ingredient';
 import { useAppDispatch, useAppSelector } from '@/app/store';
+import { useActiveTab } from './hooks';
 
 export const BurgerIngredients: FC = () => {
   const dispatch = useAppDispatch();
-  const ingredients = useAppSelector(selectIngredients);
-  const [selected, setSelected] = useState<string | null>(null);
+  const ingredients = useAppSelector((state) => state.ingredients.items);
+  const selectIngredient = useAppSelector((state) => state.currentIngredient.item);
 
-  const selectIngredient = useMemo(() => {
-    if (!selected) return null;
+  const activeTab = useAppSelector((state) => state.ingredients.activeTab);
+  const containerRef = useRef<HTMLDivElement>(null);
+  const headersRef = useRef<Map<string, HTMLHeadingElement>>(new Map());
 
-    return (
-      ingredients.flatMap((group) => group.items).find((item) => item.id === selected) ??
-      null
-    );
-  }, [ingredients, selected]);
+  const handleTabClick = (value: string): void => {
+    const header = headersRef.current.get(value);
+    if (header && containerRef.current) {
+      const container = containerRef.current;
+      const containerTop = container.getBoundingClientRect().top;
+      const headerTop = header.getBoundingClientRect().top;
+      const scrollOffset = headerTop - containerTop + container.scrollTop;
+
+      container.scrollTo({
+        top: scrollOffset,
+        behavior: 'smooth',
+      });
+
+      dispatch(setActiveTab(value));
+    }
+  };
+
+  useEffect(() => {
+    if (ingredients.length > 0 && !activeTab) {
+      dispatch(setActiveTab(ingredients[0].label));
+    }
+  }, [ingredients, activeTab, dispatch]);
+
+  useActiveTab({
+    containerRef,
+    headersRef,
+    activeTab,
+    onTabChange: (label) => {
+      dispatch(setActiveTab(label));
+    },
+    isEnabled: ingredients.length > 0,
+  });
 
   useEffect(() => {
     dispatch(getIngredients());
@@ -29,12 +62,22 @@ export const BurgerIngredients: FC = () => {
 
   return (
     <div className={styles.burger_ingredients}>
-      <BurgerTabs tabs={tabsTuple} onClick={() => console.log('click')} />
+      <BurgerTabs tabs={tabsTuple} onClick={handleTabClick} activeTab={activeTab} />
 
-      <UIBox className={styles.cards}>
+      <UIBox ref={containerRef} className={styles.cards}>
         {ingredients.map((group) => (
           <div key={group.type}>
-            <h2 className={`text text_type_main-large ${styles.ingredients__title}`}>
+            <h2
+              ref={(el) => {
+                if (el) {
+                  headersRef.current.set(group.label, el);
+                } else {
+                  headersRef.current.delete(group.label);
+                }
+              }}
+              data-label={group.label}
+              className={`text text_type_main-large ${styles.ingredients__title}`}
+            >
               {group.label}
             </h2>
 
@@ -47,7 +90,7 @@ export const BurgerIngredients: FC = () => {
                   count={3}
                   title={ingredient.name}
                   currencyTheme="primary"
-                  onClick={() => setSelected(ingredient.id)}
+                  onClick={() => dispatch(setIngredientItem(ingredient))}
                 />
               ))}
             </div>
@@ -57,7 +100,7 @@ export const BurgerIngredients: FC = () => {
 
       <IngredientsDetailsModal
         ingredient={selectIngredient}
-        onClose={() => setSelected(null)}
+        onClose={() => dispatch(clearIngredientItem())}
       />
     </div>
   );
