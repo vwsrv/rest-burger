@@ -1,9 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import type { TIngredientItem } from '@/entities/ingridients';
-
-type TCurrentIngredientState = {
-  item: TIngredientItem | null;
-};
+import type { TCurrentIngredientState } from './types';
 
 const initialState: TCurrentIngredientState = {
   item: null,

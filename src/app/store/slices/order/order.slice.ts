@@ -2,16 +2,7 @@ import { createAsyncThunk, createSlice, type PayloadAction } from '@reduxjs/tool
 import { createOrder } from '@/entities/order/create/api';
 import { getIngredientsIds } from '@/app/store';
 import type { TRootState } from '@/app/store';
-
-type TOrder = {
-  orderId: number;
-};
-
-type TOrderState = {
-  order: TOrder | null;
-  loading: boolean;
-  error: string | null;
-};
+import type { TOrder, TOrderState } from './types';
 
 const initialState: TOrderState = {
   order: null,

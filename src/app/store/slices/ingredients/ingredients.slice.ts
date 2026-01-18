@@ -1,16 +1,6 @@
 import { createAsyncThunk, createSlice, type PayloadAction } from '@reduxjs/toolkit';
-import {
-  getIngredientsData,
-  groupIngredients,
-  type TIngredientGroup,
-} from '@/entities/ingridients';
-
-type TIngredientsState = {
-  items: TIngredientGroup[] | [];
-  activeTab: string | null;
-  loading: boolean;
-  error: string | null;
-};
+import { getIngredientsData, groupIngredients } from '@/entities/ingridients';
+import type { TIngredientsState } from './types';
 
 const initialState: TIngredientsState = {
   items: [],

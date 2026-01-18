@@ -62,7 +62,7 @@ export const BurgerConstructor: FC = () => {
         ) : items?.length ? (
           items.map((item, index) => (
             <ConstructorItem
-              key={`fillings_item_${item.id}_${index}`}
+              key={item.uniqueId}
               item={item}
               index={index}
               onRemove={(idx) => dispatch(removeIngredient(idx))}

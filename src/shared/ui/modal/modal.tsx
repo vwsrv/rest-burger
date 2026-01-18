@@ -14,6 +14,20 @@ const UIModal: FC<TProps> = ({ open, onClose, children }) => {
   const [view, setView] = useState(false);
 
   useEffect(() => {
+    const handleEsc = (event: KeyboardEvent) => {
+      if (event.key === 'Escape' && open) {
+        onClose();
+      }
+    };
+
+    window.addEventListener('keydown', handleEsc);
+
+    return () => {
+      window.removeEventListener('keydown', handleEsc);
+    };
+  }, [open, onClose]);
+
+  useEffect(() => {
     setAnimation(open);
 
     if (open) {
@@ -43,7 +57,7 @@ const UIModal: FC<TProps> = ({ open, onClose, children }) => {
         {children}
       </div>
     </div>,
-    document.body
+    document.getElementById('modals')!
   );
 };
 
