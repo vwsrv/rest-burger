@@ -1,14 +1,14 @@
 import type { FC } from 'react';
 import { UIModal } from '@/shared/ui';
 import type { TIngredientItem } from '@/entities/ingridients';
-import styles from './ingredients-details-modal.module.css';
+import styles from './details-modal.module.css';
 
 type TProps = {
   ingredient: TIngredientItem | null;
   onClose: () => void;
 };
 
-export const IngredientsDetailsModal: FC<TProps> = ({ ingredient, onClose }) => {
+export const DetailsModal: FC<TProps> = ({ ingredient, onClose }) => {
   return (
     <UIModal open={!!ingredient} onClose={onClose}>
       {ingredient && (

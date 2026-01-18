@@ -1,8 +1,8 @@
 import { type FC, useEffect, useRef } from 'react';
-import { BurgerTabs, IngredientsDetailsModal } from './ui';
+import { BurgerTabs, DetailsModal, Ingredient } from './ui';
 import { tabsTuple } from '@/entities/ingridients';
 import styles from './burger-ingredients.module.css';
-import { UIBox, UICard } from '@/shared/ui';
+import { UIBox } from '@/shared/ui';
 import {
   getIngredients,
   setActiveTab,
@@ -83,13 +83,9 @@ export const BurgerIngredients: FC = () => {
 
             <div className={styles.card__list}>
               {group.items.map((ingredient) => (
-                <UICard
+                <Ingredient
                   key={`ingredient_card_${ingredient.id}`}
-                  image={ingredient.image}
-                  cost={ingredient.price}
-                  count={3}
-                  title={ingredient.name}
-                  currencyTheme="primary"
+                  ingredient={ingredient}
                   onClick={() => dispatch(setIngredientItem(ingredient))}
                 />
               ))}
@@ -98,7 +94,7 @@ export const BurgerIngredients: FC = () => {
         ))}
       </UIBox>
 
-      <IngredientsDetailsModal
+      <DetailsModal
         ingredient={selectIngredient}
         onClose={() => dispatch(clearIngredientItem())}
       />

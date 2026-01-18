@@ -1,1 +1,1 @@
-export * from './constructor.slice';
+export * from './burger-constructor.slice.ts';
