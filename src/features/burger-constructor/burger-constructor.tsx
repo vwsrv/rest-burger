@@ -1,15 +1,17 @@
 import styles from './burger-constructor.module.css';
 import type { FC } from 'react';
 import { useDrop } from 'react-dnd';
-import { DragIcon } from '@krgaa/react-developer-burger-ui-components';
 import { UIBox, UIConstructorElement } from '@/shared/ui';
 import { useAppDispatch, useAppSelector } from '@/app/store';
 import {
   addIngredient,
+  moveIngredient,
   removeIngredient,
   setBun,
-} from '@/app/store/slices/constructor/burger-constructor.slice.ts';
+} from '@/app/store/slices/burger-constructor/burger-constructor.slice.ts';
 import type { TIngredientItem } from '@/entities/ingridients';
+import { ConstructorItem } from './ui/constructor-item';
+import { Placeholder } from './ui/placeholder';
 
 export const BurgerConstructor: FC = () => {
   const dispatch = useAppDispatch();
@@ -56,32 +58,19 @@ export const BurgerConstructor: FC = () => {
 
       <UIBox className={styles.fillings__list}>
         {!bun ? (
-          <div className={styles.placeholder}>
-            <p className="text text_type_main-default text_color_inactive">
-              Перетащите булки из левого контейнера
-            </p>
-          </div>
+          <Placeholder text="Перетащите булки из левого контейнера" />
         ) : items?.length ? (
           items.map((item, index) => (
-            <UIBox
-              className={styles.fillings__item}
+            <ConstructorItem
               key={`fillings_item_${item.id}_${index}`}
-            >
-              <DragIcon type="primary" />
-              <UIConstructorElement
-                text={item.name}
-                price={Number(item.price)}
-                image={item.image}
-                handleClose={() => dispatch(removeIngredient(index))}
-              />
-            </UIBox>
+              item={item}
+              index={index}
+              onRemove={(idx) => dispatch(removeIngredient(idx))}
+              onMove={(from, to) => dispatch(moveIngredient({ from, to }))}
+            />
           ))
         ) : (
-          <div className={styles.placeholder}>
-            <p className="text text_type_main-default text_color_inactive">
-              Перетащите начинку из левого контейнера
-            </p>
-          </div>
+          <Placeholder text="Перетащите начинку из левого контейнера" />
         )}
       </UIBox>
 

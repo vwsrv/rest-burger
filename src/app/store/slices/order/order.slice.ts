@@ -1,4 +1,7 @@
-import { createSlice, type PayloadAction } from '@reduxjs/toolkit';
+import { createAsyncThunk, createSlice, type PayloadAction } from '@reduxjs/toolkit';
+import { createOrder } from '@/entities/order/create/api';
+import { getIngredientsIds } from '@/app/store';
+import type { TRootState } from '@/app/store';
 
 type TOrder = {
   orderId: number;
@@ -6,11 +9,24 @@ type TOrder = {
 
 type TOrderState = {
   order: TOrder | null;
+  loading: boolean;
+  error: string | null;
 };
 
 const initialState: TOrderState = {
   order: null,
+  loading: false,
+  error: null,
 };
+
+export const createOrderThunk = createAsyncThunk('order/createOrder', (_, thunkAPI) => {
+  const state = thunkAPI.getState() as TRootState;
+  const itemIds = getIngredientsIds(state);
+
+  return createOrder({ ingredients: itemIds }).then((response) => ({
+    orderId: response.order.number,
+  }));
+});
 
 const orderSlice = createSlice({
   name: 'order',
@@ -22,6 +38,22 @@ const orderSlice = createSlice({
     clearOrder: (state): void => {
       state.order = null;
     },
+  },
+  extraReducers: (builder) => {
+    builder
+      .addCase(createOrderThunk.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(createOrderThunk.fulfilled, (state, action) => {
+        state.loading = false;
+        state.order = action.payload;
+        state.error = null;
+      })
+      .addCase(createOrderThunk.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.error.message || 'Something went wrong';
+      });
   },
 });
 

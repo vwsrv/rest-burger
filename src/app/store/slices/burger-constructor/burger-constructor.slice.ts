@@ -4,11 +4,15 @@ import type { TRootState } from '@/app/store';
 
 type TConstructorState = {
   items: TIngredientItem[];
+  itemIds: string[];
+  price: number;
   bun: TIngredientItem | null;
 };
 
 const initialState: TConstructorState = {
   items: [],
+  itemIds: [],
+  price: 0,
   bun: null,
 };
 
@@ -37,6 +41,7 @@ export const burgerConstructorSlice = createSlice({
     clearConstructor: (state) => {
       state.items = [];
       state.bun = null;
+      state.itemIds = [];
     },
   },
 });
@@ -61,3 +66,21 @@ export const getIngredientCount =
 
     return items?.filter((item) => item.id === ingredient.id)?.length ?? 0;
   };
+
+export const getIngredientsIds = (state: TRootState): string[] => {
+  const { bun, items } = state.burgerConstructor;
+
+  const bunIds = bun ? [bun.id, bun.id] : [];
+  const itemIds = items.map((item) => item.id);
+
+  return [...bunIds, ...itemIds];
+};
+
+export const getTotalPrice = (state: TRootState): number => {
+  const { bun, items } = state.burgerConstructor;
+
+  const bunPrice = bun ? Number(bun.price) * 2 : 0;
+  const itemsPrice = items.reduce((sum, item) => sum + Number(item.price), 0);
+
+  return bunPrice + itemsPrice;
+};
