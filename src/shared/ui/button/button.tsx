@@ -9,6 +9,7 @@ type TProps = {
   onClick: (() => void) | ((e: SyntheticEvent<Element, Event>) => void) | undefined;
   className?: string | undefined;
   htmlType: 'button' | 'submit' | 'reset';
+  disabled?: boolean;
 };
 
 const UIButton: FC<TProps> = ({
@@ -17,6 +18,7 @@ const UIButton: FC<TProps> = ({
   onClick,
   className,
   htmlType,
+  disabled,
   children,
 }) => {
   return (
@@ -26,6 +28,7 @@ const UIButton: FC<TProps> = ({
       onClick={onClick}
       extraClass={className}
       htmlType={htmlType}
+      disabled={disabled}
     >
       {children}
     </Button>

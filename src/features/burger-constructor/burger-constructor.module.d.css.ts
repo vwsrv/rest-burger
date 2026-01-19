@@ -3,5 +3,6 @@ declare const classNames: {
   readonly but__item: "but__item";
   readonly fillings__item: "fillings__item";
   readonly fillings__list: "fillings__list";
+  readonly placeholder: "placeholder";
 };
 export default classNames;

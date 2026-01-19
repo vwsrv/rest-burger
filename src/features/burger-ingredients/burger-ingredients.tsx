@@ -1,54 +1,92 @@
-import { type FC, useEffect, useMemo, useState } from 'react';
-import { BurgerTabs, IngredientsDetailsModal } from './ui';
-import {
-  getIngredientsData,
-  tabsTuple,
-  type TIngredientGroup,
-} from '@/entities/ingridients';
+import { type FC, useEffect, useRef } from 'react';
+import { BurgerTabs, DetailsModal, Ingredient } from './ui';
+import { tabsTuple } from '@/entities/ingridients';
 import styles from './burger-ingredients.module.css';
-import { groupIngredients } from '@/entities/ingridients/utils/group-ingredients.util.ts';
-import { UIBox, UICard } from '@/shared/ui';
+import { UIBox } from '@/shared/ui';
+import {
+  getIngredients,
+  setActiveTab,
+} from '@/app/store/slices/ingredients/ingredients.slice.ts';
+import {
+  clearIngredientItem,
+  setIngredientItem,
+} from '@/app/store/slices/current-ingredient';
+import { useAppDispatch, useAppSelector } from '@/app/store';
+import { useActiveTab } from './hooks';
 
 export const BurgerIngredients: FC = () => {
-  const [ingredients, setIngredients] = useState<TIngredientGroup[]>([]);
-  const [selected, setSelected] = useState<string | null>(null);
+  const dispatch = useAppDispatch();
+  const ingredients = useAppSelector((state) => state.ingredients.items);
+  const selectIngredient = useAppSelector((state) => state.currentIngredient.item);
 
-  const selectIngredient = useMemo(() => {
-    if (!selected) {
-      return null;
+  const activeTab = useAppSelector((state) => state.ingredients.activeTab);
+  const containerRef = useRef<HTMLDivElement>(null);
+  const headersRef = useRef<Map<string, HTMLHeadingElement>>(new Map());
+
+  const handleTabClick = (value: string): void => {
+    const header = headersRef.current.get(value);
+    if (header && containerRef.current) {
+      const container = containerRef.current;
+      const containerTop = container.getBoundingClientRect().top;
+      const headerTop = header.getBoundingClientRect().top;
+      const scrollOffset = headerTop - containerTop + container.scrollTop;
+
+      container.scrollTo({
+        top: scrollOffset,
+        behavior: 'smooth',
+      });
+
+      dispatch(setActiveTab(value));
     }
-
-    return (
-      ingredients.flatMap((group) => group.items).find((item) => item.id === selected) ??
-      null
-    );
-  }, [ingredients, selected]);
+  };
 
   useEffect(() => {
-    void getIngredientsData().then(groupIngredients).then(setIngredients);
-  }, []);
+    if (ingredients.length > 0 && !activeTab) {
+      dispatch(setActiveTab(ingredients[0].label));
+    }
+  }, [ingredients, activeTab, dispatch]);
+
+  useActiveTab({
+    containerRef,
+    headersRef,
+    activeTab,
+    onTabChange: (label) => {
+      dispatch(setActiveTab(label));
+    },
+    isEnabled: ingredients.length > 0,
+  });
+
+  useEffect(() => {
+    dispatch(getIngredients());
+  }, [dispatch]);
 
   return (
     <div className={styles.burger_ingredients}>
-      <BurgerTabs tabs={tabsTuple} onClick={() => console.log('click')} />
+      <BurgerTabs tabs={tabsTuple} onClick={handleTabClick} activeTab={activeTab} />
 
-      <UIBox className={styles.cards}>
+      <UIBox ref={containerRef} className={styles.cards}>
         {ingredients.map((group) => (
           <div key={group.type}>
-            <h2 className={`text text_type_main-large ${styles.ingredients__title}`}>
+            <h2
+              ref={(el) => {
+                if (el) {
+                  headersRef.current.set(group.label, el);
+                } else {
+                  headersRef.current.delete(group.label);
+                }
+              }}
+              data-label={group.label}
+              className={`text text_type_main-large ${styles.ingredients__title}`}
+            >
               {group.label}
             </h2>
 
             <div className={styles.card__list}>
               {group.items.map((ingredient) => (
-                <UICard
+                <Ingredient
                   key={`ingredient_card_${ingredient.id}`}
-                  image={ingredient.image}
-                  cost={ingredient.price}
-                  count={3}
-                  title={ingredient.name}
-                  currencyTheme="primary"
-                  onClick={() => setSelected(ingredient.id)}
+                  ingredient={ingredient}
+                  onClick={() => dispatch(setIngredientItem(ingredient))}
                 />
               ))}
             </div>
@@ -56,9 +94,9 @@ export const BurgerIngredients: FC = () => {
         ))}
       </UIBox>
 
-      <IngredientsDetailsModal
+      <DetailsModal
         ingredient={selectIngredient}
-        onClose={() => setSelected(null)}
+        onClose={() => dispatch(clearIngredientItem())}
       />
     </div>
   );

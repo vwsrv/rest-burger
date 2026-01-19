@@ -1,23 +1,49 @@
 import styles from './burger-constructor.module.css';
-import { type FC, useEffect, useState } from 'react';
-import { getIngredientsData, type TIngredientGroup } from '@/entities/ingridients';
-import { groupIngredients } from '@/entities/ingridients/utils/group-ingredients.util.ts';
-import { DragIcon } from '@krgaa/react-developer-burger-ui-components';
+import type { FC } from 'react';
+import { useDrop } from 'react-dnd';
 import { UIBox, UIConstructorElement } from '@/shared/ui';
+import { useAppDispatch, useAppSelector } from '@/app/store';
+import {
+  addIngredient,
+  moveIngredient,
+  removeIngredient,
+  setBun,
+} from '@/app/store/slices/burger-constructor/burger-constructor.slice.ts';
+import type { TIngredientItem } from '@/entities/ingridients';
+import { ConstructorItem } from './ui/constructor-item';
+import { Placeholder } from './ui/placeholder';
 
 export const BurgerConstructor: FC = () => {
-  const [ingredients, setIngredients] = useState<TIngredientGroup[]>([]);
+  const dispatch = useAppDispatch();
+  const constructorState = useAppSelector((state) => state.burgerConstructor);
+  const bun = constructorState.bun;
+  const items = constructorState.items;
 
-  useEffect(() => {
-    void getIngredientsData().then(groupIngredients).then(setIngredients);
-  }, []);
+  const [_, dropRef] = useDrop(
+    () => ({
+      accept: 'ingredient',
+      drop: (item: TIngredientItem) => {
+        if (item.type === 'bun') {
+          dispatch(setBun(item));
+          return;
+        }
 
-  const bunGroup = ingredients.find((group) => group.type === 'bun');
-  const bun = bunGroup?.items[0];
-  const fillings = ingredients.filter((group) => group.type !== 'bun');
+        dispatch(addIngredient(item));
+      },
+      collect: (monitor) => ({
+        isOver: monitor.isOver(),
+      }),
+    }),
+    [dispatch]
+  );
 
   return (
-    <UIBox className={styles.burger_constructor}>
+    <UIBox
+      ref={(node: HTMLDivElement | null) => {
+        dropRef(node);
+      }}
+      className={styles.burger_constructor}
+    >
       {bun && (
         <UIBox className={styles.but__item}>
           <UIConstructorElement
@@ -31,20 +57,20 @@ export const BurgerConstructor: FC = () => {
       )}
 
       <UIBox className={styles.fillings__list}>
-        {fillings.map((group) =>
-          group.items.map((item) => (
-            <UIBox className={styles.fillings__item} key={`fillings_item_${item.id}`}>
-              <DragIcon type="primary" />
-
-              <UIConstructorElement
-                key={item.id}
-                text={item.name}
-                price={Number(item.price)}
-                image={item.image}
-                handleClose={() => console.log('remove', item.id)}
-              />
-            </UIBox>
+        {!bun ? (
+          <Placeholder text="Перетащите булки из левого контейнера" />
+        ) : items?.length ? (
+          items.map((item, index) => (
+            <ConstructorItem
+              key={item.uniqueId}
+              item={item}
+              index={index}
+              onRemove={(idx) => dispatch(removeIngredient(idx))}
+              onMove={(from, to) => dispatch(moveIngredient({ from, to }))}
+            />
           ))
+        ) : (
+          <Placeholder text="Перетащите начинку из левого контейнера" />
         )}
       </UIBox>
 

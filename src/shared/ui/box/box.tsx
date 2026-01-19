@@ -1,4 +1,4 @@
-import type { FC, ReactNode } from 'react';
+import { forwardRef, type ReactNode } from 'react';
 
 type TProps = {
   children: ReactNode;
@@ -6,17 +6,16 @@ type TProps = {
   onClick?: () => void;
 };
 
-export const UIBox: FC<TProps> = ({
-  children,
-  className = '',
-  onClick,
-  ...boxProps
-}) => {
-  return (
-    <div className={`${className}`} onClick={onClick} {...boxProps}>
-      {children}
-    </div>
-  );
-};
+export const UIBox = forwardRef<HTMLDivElement, TProps>(
+  ({ children, className = '', onClick, ...boxProps }, ref) => {
+    return (
+      <div ref={ref} className={`${className}`} onClick={onClick} {...boxProps}>
+        {children}
+      </div>
+    );
+  }
+);
+
+UIBox.displayName = 'UIBox';
 
 export default UIBox;

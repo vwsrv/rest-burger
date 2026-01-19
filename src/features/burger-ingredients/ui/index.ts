@@ -1,2 +1,3 @@
 export * from './tabs';
-export * from './ingredients-details-modal';
+export * from './details-modal';
+export * from './ingredient';

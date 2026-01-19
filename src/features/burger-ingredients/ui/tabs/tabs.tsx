@@ -6,17 +6,17 @@ import { UITab } from '@/shared/ui';
 type TProps = {
   tabs: TTab[];
   onClick: (value: string) => void;
-  active?: boolean;
+  activeTab: string | null;
 };
 
-const BurgerTabs: FC<TProps> = ({ tabs, onClick, active = true }) => {
+const BurgerTabs: FC<TProps> = ({ tabs, onClick, activeTab }) => {
   return (
     <nav>
       <ul className={styles.tabs}>
         {tabs.map((tab) => {
           return (
             <UITab
-              active={active}
+              active={activeTab === tab.label}
               value={tab.label}
               onClick={onClick}
               key={`tabs-${tab.id}`}
