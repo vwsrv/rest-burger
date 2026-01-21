@@ -1,9 +1,7 @@
-.app {
+.main {
   display: flex;
   flex-direction: column;
   height: 100vh;
-  color: var(--text-primary-color);
-  background-color: var(--background-alt);
 }
 
 .title {
@@ -13,7 +11,7 @@
   margin-left: auto;
 }
 
-.main {
+.mainContent {
   display: flex;
   justify-content: space-between;
   width: 1240px;

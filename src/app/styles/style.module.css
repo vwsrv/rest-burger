@@ -19,8 +19,6 @@ body {
   margin: 0;
 }
 
-/* Fix for scrollbar */
-
 @supports (scrollbar-color: auto) {
   .custom-scroll {
     scrollbar-color: #8585ad #2f2f37;
@@ -31,4 +29,32 @@ body {
     scrollbar-color: #8585ad #2f2f37;
     scrollbar-width: thin;
   }
+}
+
+.app {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+
+.title {
+  width: 100%;
+  max-width: 1260px;
+  margin-right: auto;
+  margin-left: auto;
+}
+
+.main {
+  display: flex;
+  justify-content: space-between;
+  width: 1240px;
+  height: calc(100% - var(--spacing-10));
+  margin: 0 auto;
+  padding-bottom: var(--spacing-10);
+  overflow: hidden;
+}
+
+a {
+  color: #4c4cff;
+  text-decoration: none;
 }
