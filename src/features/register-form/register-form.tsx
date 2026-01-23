@@ -7,7 +7,7 @@ import styles from './register-form.module.css';
 const RegisterForm: FC = () => {
   return (
     <div className={styles.register}>
-      <div className={styles.registerForm}>
+      <form className={styles.registerForm}>
         <h1 className="text text_type_main-medium">Регистрация</h1>
 
         <Input
@@ -41,9 +41,9 @@ const RegisterForm: FC = () => {
         >
           Зарегистрироваться
         </UIButton>
-      </div>
+      </form>
 
-      <div className={styles.registerLinks}>
+      <nav className={styles.registerLinks}>
         <div className={styles.registerLink}>
           <p className="text text_type_main-default text_color_inactive">
             Уже зарегистрированы?
@@ -52,7 +52,7 @@ const RegisterForm: FC = () => {
             Войти
           </NavLink>
         </div>
-      </div>
+      </nav>
     </div>
   );
 };

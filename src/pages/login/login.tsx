@@ -4,9 +4,9 @@ import styles from './login.module.css';
 
 const Login: FC = () => {
   return (
-    <div className={styles.login}>
+    <main className={styles.login}>
       <LoginForm />
-    </div>
+    </main>
   );
 };
 

@@ -10,7 +10,7 @@ type TProps = {
 const ForgotPasswordForm: FC<TProps> = ({ exists }) => {
   return (
     <div className={styles.forgotPassword}>
-      <div className={styles.forgotPasswordForm}>
+      <form className={styles.forgotPasswordForm}>
         <h1 className="text text_type_main-medium">Восстановление пароля</h1>
 
         {exists ? (
@@ -44,8 +44,8 @@ const ForgotPasswordForm: FC<TProps> = ({ exists }) => {
         >
           Сохранить
         </UIButton>
-      </div>
-      <div className={styles.forgotPasswordLinks}>
+      </form>
+      <nav className={styles.forgotPasswordLinks}>
         <div className={styles.forgotPasswordLink}>
           <p className="text text_type_main-default text_color_inactive">
             Вспомнили пароль?
@@ -54,7 +54,7 @@ const ForgotPasswordForm: FC<TProps> = ({ exists }) => {
             Войти
           </NavLink>
         </div>
-      </div>
+      </nav>
     </div>
   );
 };

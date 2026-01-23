@@ -7,7 +7,7 @@ import styles from './profile-form.module.css';
 const ProfileForm: FC = () => {
   return (
     <div className={styles.profile}>
-      <div>
+      <aside>
         <nav className={styles.profileNav}>
           <NavLink
             to="/profile"
@@ -38,9 +38,9 @@ const ProfileForm: FC = () => {
           <br />
           изменить свои персональные данные
         </p>
-      </div>
+      </aside>
 
-      <div className={styles.profileForm}>
+      <form className={styles.profileForm}>
         <Input
           value={''}
           placeholder="Имя"
@@ -61,7 +61,7 @@ const ProfileForm: FC = () => {
           onChange={(e) => e.target.value}
           icon="EditIcon"
         />
-      </div>
+      </form>
     </div>
   );
 };

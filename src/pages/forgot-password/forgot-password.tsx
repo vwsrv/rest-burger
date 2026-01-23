@@ -1,12 +1,12 @@
 import type { FC } from 'react';
 import styles from './forgot-password.module.css';
-import ForgotPasswordForm from '@/features/forgot-password-form/forgot-password-form.tsx';
+import ForgotPasswordForm from '@/features/forgot-password-form/forgot-password-form';
 
 const ForgotPassword: FC = () => {
   return (
-    <div className={styles.forgotPassword}>
+    <main className={styles.forgotPassword}>
       <ForgotPasswordForm exists={false} />
-    </div>
+    </main>
   );
 };
 

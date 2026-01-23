@@ -4,9 +4,9 @@ import styles from './register.module.css';
 
 const Register: FC = () => {
   return (
-    <div className={styles.register}>
+    <main className={styles.register}>
       <RegisterForm />
-    </div>
+    </main>
   );
 };
 

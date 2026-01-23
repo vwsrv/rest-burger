@@ -4,9 +4,9 @@ import styles from './profile.module.css';
 
 const Profile: FC = () => {
   return (
-    <div className={styles.profile}>
+    <main className={styles.profile}>
       <ProfileForm />
-    </div>
+    </main>
   );
 };
 

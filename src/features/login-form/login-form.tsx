@@ -23,7 +23,7 @@ const LoginForm: FC = () => {
 
   return (
     <div className={styles.login}>
-      <div className={styles.loginForm}>
+      <form className={styles.loginForm}>
         <h1 className="text text_type_main-medium">Вход</h1>
 
         <UIEmailInput
@@ -51,9 +51,9 @@ const LoginForm: FC = () => {
         <UIButton type="primary" size="medium" onClick={handleSubmit} htmlType="submit">
           {loading ? 'Вход...' : 'Войти'}
         </UIButton>
-      </div>
+      </form>
 
-      <div className={styles.loginLinks}>
+      <nav className={styles.loginLinks}>
         <div className={styles.loginLink}>
           <p className="text text_type_main-default text_color_inactive">
             Вы — новый пользователь?
@@ -71,7 +71,7 @@ const LoginForm: FC = () => {
             Восстановить пароль
           </NavLink>
         </div>
-      </div>
+      </nav>
     </div>
   );
 };
