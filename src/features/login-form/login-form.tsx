@@ -1,9 +1,11 @@
-import { type FC, useState } from 'react';
+import { type FC, type FormEvent, useState } from 'react';
 import { UIButton, UIEmailInput, UIPasswordInput } from '@/shared/ui';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 import styles from './login-form.module.css';
 import { useAppDispatch, useAppSelector } from '@/app/store';
 import { clearError, loginUserThunk } from '@/app/store/slices/user';
+import { loginSchema } from '@/shared/validation/schemas';
+import type { ValidationError } from 'yup';
 
 const LoginForm: FC = () => {
   const [loginForm, setLoginForm] = useState({
@@ -11,19 +13,38 @@ const LoginForm: FC = () => {
     password: '',
   });
   const { loading, error } = useAppSelector((state) => state.user);
-  const dispatch = useAppDispatch();
+  const isFormValid = loginSchema.isValidSync(loginForm);
 
-  const handleSubmit = (): void => {
-    dispatch(loginUserThunk(loginForm))
-      .unwrap()
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
+
+  const [validationError, setValidationError] = useState<string>('');
+
+  const handleSubmit = (e: FormEvent<HTMLFormElement>): void => {
+    e.preventDefault();
+
+    loginSchema
+      .validate(loginForm, { abortEarly: false })
       .then(() => {
-        dispatch(clearError());
+        setValidationError('');
+        dispatch(loginUserThunk(loginForm))
+          .unwrap()
+          .then(() => {
+            dispatch(clearError());
+            navigate('/');
+          });
+      })
+      .catch((err: ValidationError) => {
+        const errorMessages = err.inner
+          .map((error: ValidationError) => error.message)
+          .join(', ');
+        setValidationError(errorMessages);
       });
   };
 
   return (
     <div className={styles.login}>
-      <form className={styles.loginForm}>
+      <form className={styles.loginForm} onSubmit={handleSubmit} noValidate>
         <h1 className="text text_type_main-medium">Вход</h1>
 
         <UIEmailInput
@@ -42,13 +63,18 @@ const LoginForm: FC = () => {
           icon="ShowIcon"
         />
 
-        {error && (
+        {(error || validationError) && (
           <p className="text text_type_main-default text_color_error">
-            При попытке входа произошла ошибка
+            {validationError || error}
           </p>
         )}
 
-        <UIButton type="primary" size="medium" onClick={handleSubmit} htmlType="submit">
+        <UIButton
+          type="primary"
+          size="medium"
+          htmlType="submit"
+          disabled={!isFormValid || loading}
+        >
           {loading ? 'Вход...' : 'Войти'}
         </UIButton>
       </form>
