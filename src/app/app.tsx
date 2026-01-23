@@ -7,6 +7,7 @@ import { Provider } from 'react-redux';
 import { store } from '@/app/store';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { ForgotPassword, Ingredients, Login, Profile, Register } from '@/pages';
+import ProtectedRoute from '@/widgets/protected-route/protected-route.tsx';
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
@@ -14,17 +15,59 @@ createRoot(document.getElementById('root')!).render(
       <ErrorBoundary>
         <Router>
           <Routes>
-            <Route path="/" element={<MainPage />} />
+            <Route
+              path="/"
+              element={
+                <ProtectedRoute auth={true}>
+                  <MainPage />
+                </ProtectedRoute>
+              }
+            />
 
-            <Route path="/login" element={<Login />} />
+            <Route
+              path="/login"
+              element={
+                <ProtectedRoute auth={false}>
+                  <Login />
+                </ProtectedRoute>
+              }
+            />
 
-            <Route path="/register" element={<Register />} />
+            <Route
+              path="/register"
+              element={
+                <ProtectedRoute auth={false}>
+                  <Register />
+                </ProtectedRoute>
+              }
+            />
 
-            <Route path="/forgot-password" element={<ForgotPassword />} />
+            <Route
+              path="/forgot-password"
+              element={
+                <ProtectedRoute auth={false}>
+                  <ForgotPassword />
+                </ProtectedRoute>
+              }
+            />
 
-            <Route path="/profile" element={<Profile />} />
+            <Route
+              path="/profile"
+              element={
+                <ProtectedRoute auth={true}>
+                  <Profile />
+                </ProtectedRoute>
+              }
+            />
 
-            <Route path="/ingredients" element={<Ingredients />} />
+            <Route
+              path="/ingredients"
+              element={
+                <ProtectedRoute auth={true}>
+                  <Ingredients />
+                </ProtectedRoute>
+              }
+            />
           </Routes>
         </Router>
       </ErrorBoundary>
