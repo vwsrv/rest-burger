@@ -5,4 +5,5 @@ export type RequestConfig = AxiosRequestConfig & {
   ignoreErrorStatuses?: number[];
   ignoreAllErrors?: boolean;
   requiresAuth?: boolean;
+  isRefreshing?: boolean;
 };

@@ -26,6 +26,7 @@
     "@krgaa/react-developer-burger-ui-components": "^1.0.1",
     "@reduxjs/toolkit": "^2.9.0",
     "axios": "^1.13.2",
+    "axios-auth-refresh": "^3.3.6",
     "core-js": "^3.45.1",
     "lodash-es": "^4.17.21",
     "react": "^19.1.0",

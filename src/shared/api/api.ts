@@ -1,7 +1,8 @@
 import axios, { type AxiosInstance, type AxiosRequestConfig } from 'axios';
-
+import createAuthRefreshInterceptor from 'axios-auth-refresh';
 import {
   errorInterceptor,
+  refreshInterceptor,
   requestInterceptor,
   successInterceptor,
 } from './interceptors.ts';
@@ -20,5 +21,10 @@ const api: AxiosInstance = axios.create(axiosRequestConfig);
 
 api.interceptors.request.use(requestInterceptor);
 api.interceptors.response.use(successInterceptor, errorInterceptor);
+
+createAuthRefreshInterceptor(api, refreshInterceptor, {
+  statusCodes: [401],
+  pauseInstanceWhileRefreshing: true,
+});
 
 export { api };
