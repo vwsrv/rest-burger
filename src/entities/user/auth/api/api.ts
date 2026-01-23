@@ -11,7 +11,7 @@ export const registerUser = async (
   data: TRegisterRequest
 ): Promise<TRegisterResponse> => {
   return api
-    .post<TRegisterResponse>('api/auth/register', data, {
+    .post<TRegisterResponse>('/api/auth/register', data, {
       baseURL: import.meta.env.SERVICE_BURGER_API,
     })
     .then((res) => {
@@ -31,7 +31,7 @@ export const loginUser = async (data: TLoginRequest): Promise<TLoginResponse> =>
 
 export const logoutUser = async (data: TLogoutRequest): Promise<TBaseResponse> => {
   return api
-    .post<TBaseResponse>('api/auth/logout', data, {
+    .post<TBaseResponse>('/api/auth/logout', data, {
       baseURL: import.meta.env.SERVICE_BURGER_API,
     })
     .then((res) => {

@@ -1,15 +1,27 @@
 import type {
   TPasswordRestoreRequest,
-  TPasswordRestoreResponse,
+  TPasswordResetRequest,
 } from '@/entities/user/password/models';
-import { api } from '@/shared/api';
+import { api, type TBaseResponse } from '@/shared/api';
 
 export const restorePassword = async (
   data: TPasswordRestoreRequest
-): Promise<TPasswordRestoreResponse> => {
+): Promise<TBaseResponse> => {
   return api
     .post('/api/password-reset', data, {
       baseURL: import.meta.env.SERVICE_BURGER_API,
     })
     .then((response) => response.data);
+};
+
+export const resetPassword = async (
+  data: TPasswordResetRequest
+): Promise<TBaseResponse> => {
+  return api
+    .post('/api/password-reset', data, {
+      baseURL: import.meta.env.SERVICE_BURGER_API,
+    })
+    .then((response) => {
+      return response.data;
+    });
 };
