@@ -1,3 +1,4 @@
+import { getCookie } from '@/entities/user/auth/utils';
 import type { RequestConfig } from '@/shared/error-boundary/types';
 import type { AxiosError, AxiosResponse, InternalAxiosRequestConfig } from 'axios';
 
@@ -9,11 +10,21 @@ type ConsoleError = {
 export const requestInterceptor = (
   config: InternalAxiosRequestConfig
 ): InternalAxiosRequestConfig => {
-  if ((config as RequestConfig).ignoreXHeaders) {
+  const requestConfig = config as RequestConfig;
+
+  if (requestConfig.ignoreXHeaders) {
     config.headers?.set('Authorization', undefined);
     config.headers?.set('X-Token', undefined);
     config.headers?.set('X-App-Version', undefined);
     config.headers?.set('X-App-Type', undefined);
+    return config;
+  }
+
+  if (requestConfig.requiresAuth) {
+    const token = getCookie('accessToken');
+    if (token) {
+      config.headers?.set('Authorization', `Bearer ${token}`);
+    }
   }
 
   return config;
