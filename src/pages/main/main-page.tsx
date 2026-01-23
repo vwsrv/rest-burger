@@ -1,25 +1,27 @@
-import { AppHeader } from '@/widgets/app-header/app-header.tsx';
 import type { JSX } from 'react';
-import { LeftSide } from '@/widgets/left-side/left-side.tsx';
-import { RightSide } from '@/widgets/righ-side/right-side.tsx';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 import styles from './main-page.module.css';
+import { RightSide, LeftSide } from '@/widgets';
 
 export const MainPage = (): JSX.Element => {
   return (
     <DndProvider backend={HTML5Backend}>
-      <div className={styles.main}>
-        <AppHeader />
-        <h1 className={`${styles.title} text text_type_main-large mt-10 mb-5 pl-5`}>
-          Соберите бургер
-        </h1>
-        <main className={`${styles.mainContent} pl-5 pr-5`}>
-          <LeftSide />
+      <main className={styles.main}>
+        <div className={`${styles.mainContent} pl-5 pr-5`}>
+          <section className={styles.titleSection}>
+            <h1 className={`${styles.title} text text_type_main-large mt-10 mb-5`}>
+              Соберите бургер
+            </h1>
+          </section>
 
-          <RightSide />
-        </main>
-      </div>
+          <section className={styles.contentSection}>
+            <LeftSide />
+
+            <RightSide />
+          </section>
+        </div>
+      </main>
     </DndProvider>
   );
 };

@@ -1,7 +1,7 @@
 .main {
   display: flex;
   flex-direction: column;
-  height: 100vh;
+  height: calc(100vh - 100px);
 }
 
 .title {
@@ -13,10 +13,22 @@
 
 .mainContent {
   display: flex;
-  justify-content: space-between;
+  flex-direction: column;
   width: 1240px;
   height: calc(100% - var(--spacing-10));
   margin: 0 auto;
   padding-bottom: var(--spacing-10);
+  overflow: hidden;
+}
+
+.titleSection {
+  flex-shrink: 0;
+}
+
+.contentSection {
+  display: flex;
+  flex: 1;
+  justify-content: space-between;
+  min-height: 0;
   overflow: hidden;
 }

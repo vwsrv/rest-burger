@@ -88,3 +88,5 @@ export const PayOrder: FC = () => {
     </div>
   );
 };
+
+export default PayOrder;

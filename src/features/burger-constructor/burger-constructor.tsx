@@ -13,7 +13,7 @@ import type { TIngredientItem } from '@/entities/ingridients';
 import { ConstructorItem } from './ui/constructor-item';
 import { Placeholder } from './ui/placeholder';
 
-export const BurgerConstructor: FC = () => {
+const BurgerConstructor: FC = () => {
   const dispatch = useAppDispatch();
   const constructorState = useAppSelector((state) => state.burgerConstructor);
   const bun = constructorState.bun;
@@ -88,3 +88,5 @@ export const BurgerConstructor: FC = () => {
     </UIBox>
   );
 };
+
+export default BurgerConstructor;

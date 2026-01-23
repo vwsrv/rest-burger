@@ -7,7 +7,7 @@ import { Provider } from 'react-redux';
 import { store } from '@/app/store';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { ForgotPassword, Ingredients, Login, Profile, Register } from '@/pages';
-import ProtectedRoute from '@/widgets/protected-route/protected-route.tsx';
+import { ProtectedRoute } from '@/widgets';
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>

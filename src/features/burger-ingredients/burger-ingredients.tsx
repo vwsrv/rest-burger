@@ -14,7 +14,7 @@ import {
 import { useAppDispatch, useAppSelector } from '@/app/store';
 import { useActiveTab } from './hooks';
 
-export const BurgerIngredients: FC = () => {
+const BurgerIngredients: FC = () => {
   const dispatch = useAppDispatch();
   const ingredients = useAppSelector((state) => state.ingredients.items);
   const selectIngredient = useAppSelector((state) => state.currentIngredient.item);
@@ -101,3 +101,5 @@ export const BurgerIngredients: FC = () => {
     </div>
   );
 };
+
+export default BurgerIngredients;

@@ -1,3 +1,3 @@
-export { AppHeader } from './app-header/app-header';
-export { LeftSide } from './left-side/left-side';
-export { RightSide } from './righ-side/right-side';
+export { default as LeftSide } from './left-side/left-side';
+export { default as RightSide } from './righ-side/right-side';
+export { default as ProtectedRoute } from './protected-route';
