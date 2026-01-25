@@ -1,13 +1,23 @@
-import type { FC } from 'react';
+import { type FC, useEffect } from 'react';
 import { UIButton, UIEmailInput, UIPasswordInput } from '@/shared/ui';
 import { NavLink } from 'react-router-dom';
 import styles from './forgot-password.module.css';
+import { clearError } from '@/app/store/slices/user';
+import { useAppDispatch } from '@/app/store';
 
 type TProps = {
   exists: boolean;
 };
 
 const ForgotPasswordForm: FC<TProps> = ({ exists }) => {
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    return () => {
+      dispatch(clearError());
+    };
+  }, []);
+
   return (
     <div className={styles.forgotPassword}>
       <form className={styles.forgotPasswordForm}>

@@ -1,8 +1,8 @@
 import type { FC } from 'react';
-import styles from './left-side.module.css';
+import styles from './ingredients-content.module.css';
 import { BurgerIngredients } from '@/features';
 
-const LeftSide: FC = () => {
+const IngredientsContent: FC = () => {
   return (
     <aside className={styles.left__side}>
       <BurgerIngredients />
@@ -10,4 +10,4 @@ const LeftSide: FC = () => {
   );
 };
 
-export default LeftSide;
+export default IngredientsContent;

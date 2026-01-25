@@ -1,4 +1,4 @@
-import { type FC, type FormEvent, useState } from 'react';
+import { type FC, type FormEvent, useEffect, useState } from 'react';
 import { UIButton, UIEmailInput, UIPasswordInput } from '@/shared/ui';
 import { Input } from '@krgaa/react-developer-burger-ui-components';
 import { NavLink, useNavigate } from 'react-router-dom';
@@ -41,6 +41,12 @@ const RegisterForm: FC = () => {
         setValidationError(getErrorMessage(err));
       });
   };
+
+  useEffect(() => {
+    return () => {
+      dispatch(clearError());
+    };
+  }, []);
 
   return (
     <div className={styles.register}>

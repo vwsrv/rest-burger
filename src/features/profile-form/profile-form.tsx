@@ -5,6 +5,7 @@ import { UIButton, UIEmailInput, UIPasswordInput } from '@/shared/ui';
 import styles from './profile-form.module.css';
 import { useAppDispatch, useAppSelector } from '@/app/store';
 import {
+  clearError,
   editUserInfoThink,
   getUserInfoThunk,
   logoutUserThunk,
@@ -99,6 +100,10 @@ const ProfileForm: FC = () => {
 
   useEffect(() => {
     dispatch(getUserInfoThunk());
+
+    return () => {
+      dispatch(clearError());
+    };
   }, []);
 
   return (

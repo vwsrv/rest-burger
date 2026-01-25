@@ -10,7 +10,7 @@ type TProps = {
   auth: boolean;
 };
 
-const ProtectedRoute: FC<TProps> = ({ children, auth }) => {
+const ProtectedLayout: FC<TProps> = ({ children, auth }) => {
   const location = useLocation();
 
   const accessToken = getCookie(ACCESS_TOKEN_KEY);
@@ -35,4 +35,4 @@ const ProtectedRoute: FC<TProps> = ({ children, auth }) => {
   return children;
 };
 
-export default ProtectedRoute;
+export default ProtectedLayout;

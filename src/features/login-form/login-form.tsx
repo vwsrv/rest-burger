@@ -1,4 +1,4 @@
-import { type FC, type FormEvent, useState } from 'react';
+import { type FC, type FormEvent, useEffect, useState } from 'react';
 import { UIButton, UIEmailInput, UIPasswordInput } from '@/shared/ui';
 import { NavLink, useNavigate } from 'react-router-dom';
 import styles from './login-form.module.css';
@@ -39,6 +39,12 @@ const LoginForm: FC = () => {
         setValidationError(getErrorMessage(err));
       });
   };
+
+  useEffect(() => {
+    return () => {
+      dispatch(clearError());
+    };
+  }, []);
 
   return (
     <div className={styles.login}>

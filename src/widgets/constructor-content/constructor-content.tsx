@@ -1,8 +1,8 @@
 import type { FC } from 'react';
-import styles from './right-side.module.css';
+import styles from './constructor-content.module.css';
 import { BurgerConstructor, PayOrder } from '@/features';
 
-const RightSide: FC = () => {
+const ConstructorContent: FC = () => {
   return (
     <aside className={styles.right__side}>
       <BurgerConstructor />
@@ -12,4 +12,4 @@ const RightSide: FC = () => {
   );
 };
 
-export default RightSide;
+export default ConstructorContent;

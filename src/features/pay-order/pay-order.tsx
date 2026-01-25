@@ -4,6 +4,7 @@ import { UIButton } from '@/shared/ui';
 import { PriceInfo, NotificationModal } from './ui';
 import {
   clearConstructor,
+  clearOrder,
   createOrderThunk,
   getTotalPrice,
   useAppDispatch,
@@ -26,6 +27,7 @@ export const PayOrder: FC = () => {
 
   const handlePayment = (): void => {
     setOpen(true);
+    dispatch(clearOrder());
 
     dispatch(createOrderThunk())
       .unwrap()
@@ -69,11 +71,11 @@ export const PayOrder: FC = () => {
       <UIButton
         type="primary"
         size="large"
-        disabled={!bun}
+        disabled={!bun || loading}
         onClick={handlePayment}
         htmlType="button"
       >
-        {loading ? 'Оформляем заказ' : `Оформить заказ`}
+        {loading ? 'Оформляем заказ...' : `Оформить заказ`}
       </UIButton>
 
       {content && (

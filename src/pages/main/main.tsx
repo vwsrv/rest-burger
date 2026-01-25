@@ -1,10 +1,10 @@
 import type { JSX } from 'react';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
-import styles from './main-page.module.css';
+import styles from './main.module.css';
 import { RightSide, LeftSide } from '@/widgets';
 
-export const MainPage = (): JSX.Element => {
+export const Main = (): JSX.Element => {
   return (
     <DndProvider backend={HTML5Backend}>
       <main className={styles.main}>
@@ -26,4 +26,4 @@ export const MainPage = (): JSX.Element => {
   );
 };
 
-export default MainPage;
+export default Main;
