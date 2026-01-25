@@ -112,21 +112,27 @@ const ProfileForm: FC = () => {
         <nav className={styles.profileNav}>
           <NavLink
             to="/profile"
-            className={`text text_type_main-medium text_color_inactive`}
+            className={({ isActive }) =>
+              `text text_type_main-medium ${isActive ? 'text_color_active' : 'text_color_inactive'}`
+            }
           >
             <p>Профиль</p>
           </NavLink>
 
           <NavLink
             to="/orders"
-            className={`text text_type_main-medium text_color_inactive `}
+            className={({ isActive }) =>
+              `text text_type_main-medium ${isActive ? 'text_color_active' : 'text_color_inactive'}`
+            }
           >
             <p>История заказов</p>
           </NavLink>
 
           <NavLink
             to="/logout"
-            className={`text text_type_main-medium text_color_inactive`}
+            className={({ isActive }) =>
+              `text text_type_main-medium ${isActive ? 'text_color_active' : 'text_color_inactive'}`
+            }
             onClick={handleLogout}
           >
             <p>Выход</p>
