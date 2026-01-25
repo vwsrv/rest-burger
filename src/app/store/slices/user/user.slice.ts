@@ -10,6 +10,11 @@ import { ACCESS_TOKEN_KEY, REFRESH_TOKEN_KEY } from '@/shared/api/constants';
 import { removeItem, setItem } from '@/shared/utils';
 import { editUserInfo, getUserInfo } from '@/entities/user/profile/api';
 import type { TUserInfoRequest } from '@/entities/user/profile/models/types';
+import type {
+  TPasswordResetRequest,
+  TPasswordRestoreRequest,
+} from '@/entities/user/password/models';
+import { resetPassword, restorePassword } from '@/entities/user/password/api';
 
 type TUser = {
   email: string;
@@ -84,6 +89,30 @@ export const editUserInfoThink = createAsyncThunk(
         email: response.user.email,
         name: response.user.name,
       };
+    });
+  }
+);
+
+export const restorePasswordThunk = createAsyncThunk(
+  'user/passwordRestore',
+  (data: TPasswordRestoreRequest) => {
+    return restorePassword(data).then((response) => {
+      if (!response.success) {
+        throw new Error(response.message || 'Ошибка при попытке восстановить пароль');
+      }
+      return response;
+    });
+  }
+);
+
+export const resetPasswordThunk = createAsyncThunk(
+  'user/passwordReset',
+  (data: TPasswordResetRequest) => {
+    return resetPassword(data).then((response) => {
+      if (!response.success) {
+        throw new Error(response.message || 'Ошибка при сбросе пароля');
+      }
+      return response;
     });
   }
 );
@@ -179,6 +208,32 @@ const userSlice = createSlice({
         state.loading = false;
         state.error =
           action.error.message || 'Ошибка при изменении данных о пользователе';
+      })
+
+      .addCase(restorePasswordThunk.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(restorePasswordThunk.fulfilled, (state) => {
+        state.loading = false;
+        state.error = null;
+      })
+      .addCase(restorePasswordThunk.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.error.message || 'Ошибка при попытке восстановить пароль';
+      })
+
+      .addCase(resetPasswordThunk.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(resetPasswordThunk.fulfilled, (state) => {
+        state.loading = false;
+        state.error = null;
+      })
+      .addCase(resetPasswordThunk.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.error.message || 'Ошибка при сбросе пароля';
       });
   },
 });

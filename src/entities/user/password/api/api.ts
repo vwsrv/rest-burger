@@ -18,7 +18,7 @@ export const resetPassword = async (
   data: TPasswordResetRequest
 ): Promise<TBaseResponse> => {
   return api
-    .post('/api/password-reset', data, {
+    .post('/api/password-reset/reset', data, {
       baseURL: import.meta.env.SERVICE_BURGER_API,
     })
     .then((response) => {

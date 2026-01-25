@@ -4,3 +4,4 @@ export { default as Login } from './login';
 export { default as Profile } from './profile';
 export { default as Register } from './register';
 export { default as Main } from './main';
+export { default as ResetPassword } from './reset-password';

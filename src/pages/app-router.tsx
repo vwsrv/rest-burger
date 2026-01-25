@@ -7,6 +7,7 @@ import {
   Profile,
   Register,
   Main,
+  ResetPassword,
 } from '@pages/index.ts';
 
 const AppRouter = () => {
@@ -45,6 +46,15 @@ const AppRouter = () => {
           element={
             <ProtectedRoute auth={false}>
               <ForgotPassword />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/reset-password"
+          element={
+            <ProtectedRoute auth={false}>
+              <ResetPassword />
             </ProtectedRoute>
           }
         />
