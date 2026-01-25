@@ -40,7 +40,10 @@ const BurgerIngredients: FC = () => {
   const handleIngredientClick = (ingredient: TIngredientItem) => {
     dispatch(setIngredientItem(ingredient));
 
-    navigate(`/ingredients/${ingredient.id}`, { state: { fromMainPage: true } });
+    navigate(`/ingredients/${ingredient.id}`, {
+      state: { fromMainPage: true },
+      replace: true,
+    });
   };
 
   useEffect(() => {

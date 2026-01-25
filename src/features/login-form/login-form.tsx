@@ -1,6 +1,6 @@
 import { type FC, type FormEvent, useEffect, useState } from 'react';
 import { UIButton, UIEmailInput, UIPasswordInput } from '@/shared/ui';
-import { NavLink, useNavigate } from 'react-router-dom';
+import { NavLink, useNavigate, useLocation } from 'react-router-dom';
 import styles from './login-form.module.css';
 import { useAppDispatch, useAppSelector } from '@/app/store';
 import { clearError, loginUserThunk } from '@/app/store/slices/user';
@@ -18,6 +18,7 @@ const LoginForm: FC = () => {
 
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
+  const location = useLocation();
 
   const [validationError, setValidationError] = useState<string>('');
 
@@ -32,7 +33,10 @@ const LoginForm: FC = () => {
           .unwrap()
           .then(() => {
             dispatch(clearError());
-            navigate('/');
+
+            const from = location.state?.from?.pathname || '/';
+
+            navigate(from, { replace: true });
           });
       })
       .catch((err: ValidationError) => {

@@ -1,5 +1,6 @@
 import { Route, Routes } from 'react-router-dom';
 import { IngredientModalProvider, ProtectedRoute } from '@/widgets';
+import { AppHeader } from '@/shared/ui';
 import {
   ForgotPassword,
   Ingredients,
@@ -17,11 +18,14 @@ const AppRouter = () => {
         <Route
           path="/"
           element={
-            <ProtectedRoute auth={true}>
+            <>
+              <AppHeader />
               <Main />
-            </ProtectedRoute>
+            </>
           }
-        />
+        >
+          <Route path="ingredients/:id" element={<Ingredients />} />
+        </Route>
 
         <Route
           path="/login"
@@ -64,15 +68,6 @@ const AppRouter = () => {
           element={
             <ProtectedRoute auth={true}>
               <Profile />
-            </ProtectedRoute>
-          }
-        />
-
-        <Route
-          path="/ingredients/:id"
-          element={
-            <ProtectedRoute auth={true}>
-              <Ingredients />
             </ProtectedRoute>
           }
         />

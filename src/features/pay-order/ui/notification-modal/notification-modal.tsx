@@ -8,6 +8,7 @@ type TProps = {
   orderId?: number;
   status: string;
   description: string;
+  countdown?: number;
 };
 
 export const NotificationModal: FC<TProps> = ({
@@ -16,6 +17,7 @@ export const NotificationModal: FC<TProps> = ({
   onClose,
   status,
   description,
+  countdown,
 }) => {
   return (
     <UIModal open={open} onClose={onClose}>
@@ -34,6 +36,16 @@ export const NotificationModal: FC<TProps> = ({
 
             <img src="/order-status/success.png" alt="заказ успешно оформлен" />
           </>
+        )}
+
+        {countdown !== undefined && (
+          <div className={styles.notification__title}>
+            <h1
+              className={`text text_type_digits-large ${styles.notification__order_id}`}
+            >
+              {countdown}
+            </h1>
+          </div>
         )}
 
         <div className={styles.notification__description}>
