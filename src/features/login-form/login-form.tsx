@@ -6,6 +6,7 @@ import { useAppDispatch, useAppSelector } from '@/app/store';
 import { clearError, loginUserThunk } from '@/app/store/slices/user';
 import { loginSchema } from '@/shared/validation/schemas';
 import type { ValidationError } from 'yup';
+import { getErrorMessage } from '@/shared/utils';
 
 const LoginForm: FC = () => {
   const [loginForm, setLoginForm] = useState({
@@ -35,10 +36,7 @@ const LoginForm: FC = () => {
           });
       })
       .catch((err: ValidationError) => {
-        const errorMessages = err.inner
-          .map((error: ValidationError) => error.message)
-          .join(', ');
-        setValidationError(errorMessages);
+        setValidationError(getErrorMessage(err));
       });
   };
 

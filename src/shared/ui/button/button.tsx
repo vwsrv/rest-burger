@@ -4,7 +4,7 @@ import type { FC, ReactNode, SyntheticEvent } from 'react';
 
 type TProps = {
   children: ReactNode;
-  type: 'secondary' | 'primary' | undefined;
+  type: 'secondary' | 'primary' | 'none' | undefined;
   size: 'small' | 'medium' | 'large' | undefined;
   onClick?: (() => void) | ((e: SyntheticEvent<Element, Event>) => void) | undefined;
   className?: string | undefined;
@@ -21,9 +21,12 @@ const UIButton: FC<TProps> = ({
   disabled,
   children,
 }) => {
+  // Для типа 'none' используем 'secondary'
+  const buttonType = type === 'none' ? 'secondary' : type;
+
   return (
     <Button
-      type={type}
+      type={buttonType}
       size={size}
       onClick={onClick}
       extraClass={className}

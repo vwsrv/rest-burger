@@ -8,6 +8,8 @@ import type {
 import { deleteCookie, setCookie } from '@/entities/user/auth/utils';
 import { ACCESS_TOKEN_KEY, REFRESH_TOKEN_KEY } from '@/shared/api/constants';
 import { removeItem, setItem } from '@/shared/utils';
+import { editUserInfo, getUserInfo } from '@/entities/user/profile/api';
+import type { TUserInfoRequest } from '@/entities/user/profile/models/types';
 
 type TUser = {
   email: string;
@@ -65,6 +67,27 @@ export const logoutUserThunk = createAsyncThunk(
   }
 );
 
+export const getUserInfoThunk = createAsyncThunk('user/info', () => {
+  return getUserInfo().then((response) => {
+    return {
+      email: response.user.email,
+      name: response.user.name,
+    };
+  });
+});
+
+export const editUserInfoThink = createAsyncThunk(
+  'user/edit',
+  (data: TUserInfoRequest) => {
+    return editUserInfo(data).then((response) => {
+      return {
+        email: response.user.email,
+        name: response.user.name,
+      };
+    });
+  }
+);
+
 const userSlice = createSlice({
   name: 'user',
   initialState,
@@ -98,6 +121,7 @@ const userSlice = createSlice({
         state.loading = false;
         state.error = action.error.message || 'Ошибка входа';
       })
+
       .addCase(registerUserThunk.pending, (state) => {
         state.loading = true;
         state.error = null;
@@ -112,6 +136,7 @@ const userSlice = createSlice({
         state.loading = false;
         state.error = action.error.message || 'Ошибка регистрации';
       })
+
       .addCase(logoutUserThunk.pending, (state) => {
         state.loading = true;
       })
@@ -124,6 +149,36 @@ const userSlice = createSlice({
       .addCase(logoutUserThunk.rejected, (state, action) => {
         state.loading = false;
         state.error = action.error.message || 'Ошибка выхода';
+      })
+
+      .addCase(getUserInfoThunk.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(getUserInfoThunk.fulfilled, (state, action) => {
+        state.loading = false;
+        state.user = action.payload;
+        state.error = null;
+      })
+      .addCase(getUserInfoThunk.rejected, (state, action) => {
+        state.loading = false;
+        state.error =
+          action.error.message || 'Ошибка при получении данных о пользователе';
+      })
+
+      .addCase(editUserInfoThink.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(editUserInfoThink.fulfilled, (state, action) => {
+        state.loading = false;
+        state.user = action.payload;
+        state.error = null;
+      })
+      .addCase(editUserInfoThink.rejected, (state, action) => {
+        state.loading = false;
+        state.error =
+          action.error.message || 'Ошибка при изменении данных о пользователе';
       });
   },
 });

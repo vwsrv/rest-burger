@@ -57,4 +57,9 @@ body {
 a {
   color: #4c4cff;
   text-decoration: none;
+
+  &:hover {
+    opacity: 0.4;
+    transition: opacity 0.3s ease;
+  }
 }

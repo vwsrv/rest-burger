@@ -7,6 +7,7 @@ import { useAppDispatch, useAppSelector } from '@/app/store';
 import { clearError, registerUserThunk } from '@/app/store/slices/user';
 import { registerSchema } from '@/shared/validation/schemas';
 import type { ValidationError } from 'yup';
+import { getErrorMessage } from '@/shared/utils';
 
 const RegisterForm: FC = () => {
   const [registerForm, setRegisterForm] = useState({
@@ -25,21 +26,20 @@ const RegisterForm: FC = () => {
   const handleSubmit = (e: FormEvent<HTMLFormElement>): void => {
     e.preventDefault();
 
-    registerSchema.validate(registerForm, { abortEarly: false }).then(() => {
-      setValidationError('');
-      dispatch(registerUserThunk(registerForm))
-        .unwrap()
-        .then(() => {
-          dispatch(clearError());
-          navigate('/');
-        })
-        .catch((err: ValidationError) => {
-          const errorMessages = err.inner
-            .map((err: ValidationError) => err.message)
-            .join(' ');
-          setValidationError(errorMessages);
-        });
-    });
+    registerSchema
+      .validate(registerForm, { abortEarly: false })
+      .then(() => {
+        setValidationError('');
+        dispatch(registerUserThunk(registerForm))
+          .unwrap()
+          .then(() => {
+            dispatch(clearError());
+            navigate('/');
+          });
+      })
+      .catch((err: ValidationError) => {
+        setValidationError(getErrorMessage(err));
+      });
   };
 
   return (

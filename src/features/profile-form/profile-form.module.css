@@ -22,3 +22,20 @@
   align-items: center;
   gap: var(--spacing-6);
 }
+
+.buttons {
+  display: flex;
+  align-items: center;
+  align-self: end;
+  gap: var(--spacing-5);
+}
+
+.cancelButton {
+  color: #4c4cff !important;
+  cursor: pointer;
+}
+
+.cancelButton:disabled {
+  color: #8585ad !important;
+  cursor: not-allowed;
+}
