@@ -14,7 +14,7 @@ type TProps = {
 const UIPasswordInput: FC<TProps> = ({
   value,
   placeholder,
-  size,
+  size = 'default',
   icon,
   extraClass,
   onChange,

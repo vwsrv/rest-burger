@@ -1,0 +1,25 @@
+.register {
+  margin: auto;
+}
+
+.registerForm {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--spacing-6);
+}
+
+.registerLinks {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  align-self: start;
+  margin-top: 80px;
+}
+
+.registerLink {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-2);
+  text-align: center;
+}

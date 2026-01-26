@@ -1,0 +1,65 @@
+:root {
+  --spacing-1: 4px;
+  --spacing-2: 8px;
+  --spacing-3: 12px;
+  --spacing-4: 16px;
+  --spacing-5: 20px;
+  --spacing-6: 24px;
+  --spacing-7: 28px;
+  --spacing-8: 32px;
+  --spacing-9: 36px;
+  --spacing-10: 40px;
+  --spacing-15: 60px;
+  --spacing-20: 80px;
+  --spacing-25: 100px;
+  --spacing-30: 120px;
+}
+
+body {
+  margin: 0;
+}
+
+@supports (scrollbar-color: auto) {
+  .custom-scroll {
+    scrollbar-color: #8585ad #2f2f37;
+    scrollbar-width: thin;
+  }
+
+  body {
+    scrollbar-color: #8585ad #2f2f37;
+    scrollbar-width: thin;
+  }
+}
+
+.app {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+
+.title {
+  width: 100%;
+  max-width: 1260px;
+  margin-right: auto;
+  margin-left: auto;
+}
+
+.main {
+  display: flex;
+  justify-content: space-between;
+  width: 1240px;
+  height: calc(100% - var(--spacing-10));
+  margin: 0 auto;
+  padding-bottom: var(--spacing-10);
+  overflow: hidden;
+}
+
+a {
+  color: #4c4cff;
+  text-decoration: none;
+
+  &:hover {
+    opacity: 0.4;
+    transition: opacity 0.3s ease;
+  }
+}

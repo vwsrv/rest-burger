@@ -1,28 +1,25 @@
 import { type FC, useEffect, useRef } from 'react';
-import { BurgerTabs, DetailsModal, Ingredient } from './ui';
-import { tabsTuple } from '@/entities/ingridients';
+import { BurgerTabs, Ingredient } from './ui';
+import { tabsTuple, type TIngredientItem } from '@/entities/ingridients';
 import styles from './burger-ingredients.module.css';
 import { UIBox } from '@/shared/ui';
 import {
   getIngredients,
   setActiveTab,
 } from '@/app/store/slices/ingredients/ingredients.slice.ts';
-import {
-  clearIngredientItem,
-  setIngredientItem,
-} from '@/app/store/slices/current-ingredient';
+import { setIngredientItem } from '@/app/store/slices/current-ingredient';
 import { useAppDispatch, useAppSelector } from '@/app/store';
 import { useActiveTab } from './hooks';
+import { useNavigate } from 'react-router-dom';
 
-export const BurgerIngredients: FC = () => {
+const BurgerIngredients: FC = () => {
   const dispatch = useAppDispatch();
   const ingredients = useAppSelector((state) => state.ingredients.items);
-  const selectIngredient = useAppSelector((state) => state.currentIngredient.item);
-
   const activeTab = useAppSelector((state) => state.ingredients.activeTab);
   const containerRef = useRef<HTMLDivElement>(null);
   const headersRef = useRef<Map<string, HTMLHeadingElement>>(new Map());
 
+  const navigate = useNavigate();
   const handleTabClick = (value: string): void => {
     const header = headersRef.current.get(value);
     if (header && containerRef.current) {
@@ -38,6 +35,15 @@ export const BurgerIngredients: FC = () => {
 
       dispatch(setActiveTab(value));
     }
+  };
+
+  const handleIngredientClick = (ingredient: TIngredientItem) => {
+    dispatch(setIngredientItem(ingredient));
+
+    navigate(`/ingredients/${ingredient.id}`, {
+      state: { fromMainPage: true },
+      replace: true,
+    });
   };
 
   useEffect(() => {
@@ -86,18 +92,15 @@ export const BurgerIngredients: FC = () => {
                 <Ingredient
                   key={`ingredient_card_${ingredient.id}`}
                   ingredient={ingredient}
-                  onClick={() => dispatch(setIngredientItem(ingredient))}
+                  onClick={() => handleIngredientClick(ingredient)}
                 />
               ))}
             </div>
           </div>
         ))}
       </UIBox>
-
-      <DetailsModal
-        ingredient={selectIngredient}
-        onClose={() => dispatch(clearIngredientItem())}
-      />
     </div>
   );
 };
+
+export default BurgerIngredients;

@@ -8,3 +8,5 @@ export { default as UIFormattedDate } from './formatted-date';
 export { default as UIModal } from './modal';
 export { default as UIPasswordInput } from './password-input';
 export { default as UITab } from './tab';
+export { default as AppHeader } from './app-header';
+export { default as IngredientDetails } from './ingredient-details';

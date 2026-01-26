@@ -1,0 +1,41 @@
+.profile {
+  display: flex;
+  justify-content: center;
+  gap: var(--spacing-15);
+  margin: 120px;
+}
+
+.profileNavDescription {
+  max-width: 320px;
+  white-space: pre-line;
+  opacity: 0.4;
+}
+
+.profileNav {
+  display: flex;
+  flex-direction: column;
+}
+
+.profileForm {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--spacing-6);
+}
+
+.buttons {
+  display: flex;
+  align-items: center;
+  align-self: end;
+  gap: var(--spacing-5);
+}
+
+.cancelButton {
+  color: #4c4cff !important;
+  cursor: pointer;
+}
+
+.cancelButton:disabled {
+  color: #8585ad !important;
+  cursor: not-allowed;
+}

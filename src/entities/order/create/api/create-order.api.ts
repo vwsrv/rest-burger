@@ -7,6 +7,7 @@ export const createOrder = async (
   return api
     .post<TCreateOrderResponse>('api/orders', data, {
       baseURL: import.meta.env.SERVICE_BURGER_API,
+      requiresAuth: true,
     })
     .then((response) => response.data);
 };

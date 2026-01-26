@@ -1,16 +1,19 @@
 import { StrictMode } from 'react';
-import { MainPage } from '@pages/main-page.tsx';
 import { createRoot } from 'react-dom/client';
 import ErrorBoundary from '@/shared/error-boundary/error.boundary.tsx';
-import './styles/style.css';
+import './styles/style.module.css';
 import { Provider } from 'react-redux';
 import { store } from '@/app/store';
+import { BrowserRouter as Router } from 'react-router-dom';
+import AppRouter from '@pages/app-router.tsx';
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <Provider store={store}>
       <ErrorBoundary>
-        <MainPage />
+        <Router>
+          <AppRouter />
+        </Router>
       </ErrorBoundary>
     </Provider>
   </StrictMode>

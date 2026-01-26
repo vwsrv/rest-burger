@@ -1,23 +1,32 @@
 import { type FC, useState } from 'react';
+import { useNavigate, useLocation } from 'react-router-dom';
 import styles from './pay-order.module.css';
 import { UIButton } from '@/shared/ui';
 import { PriceInfo, NotificationModal } from './ui';
 import {
   clearConstructor,
+  clearOrder,
   createOrderThunk,
   getTotalPrice,
   useAppDispatch,
   useAppSelector,
 } from '@/app/store';
+import { getCookie } from '@/entities/user/auth/utils';
+import { getItem } from '@/shared/utils';
+import { ACCESS_TOKEN_KEY, REFRESH_TOKEN_KEY } from '@/shared/api/constants';
+import { useCountdown } from '@/shared/hooks';
 
 type TModalContent = {
   status: string;
   description: string;
   orderId?: number;
+  countdown?: number;
 };
 
 export const PayOrder: FC = () => {
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
+  const location = useLocation();
   const { order, loading, error } = useAppSelector((state) => state.order);
   const { bun } = useAppSelector((state) => state.burgerConstructor);
   const price = useAppSelector(getTotalPrice);
@@ -25,7 +34,19 @@ export const PayOrder: FC = () => {
   const [open, setOpen] = useState<boolean>(false);
 
   const handlePayment = (): void => {
+    const accessToken = getCookie(ACCESS_TOKEN_KEY);
+    const refreshToken = getItem<string>(REFRESH_TOKEN_KEY);
+    const isAuthenticated = Boolean(accessToken || refreshToken);
+
+    if (!isAuthenticated) {
+      setIsUnauthorized(true);
+      resetCountdown();
+      setOpen(true);
+      return;
+    }
+
     setOpen(true);
+    dispatch(clearOrder());
 
     dispatch(createOrderThunk())
       .unwrap()
@@ -34,7 +55,28 @@ export const PayOrder: FC = () => {
       });
   };
 
+  const [isUnauthorized, setIsUnauthorized] = useState(false);
+
+  const { countdown, reset: resetCountdown } = useCountdown({
+    initialValue: 3,
+    isActive: isUnauthorized && open,
+    onComplete: () => {
+      navigate('/login', { state: { from: location } });
+      setIsUnauthorized(false);
+      setOpen(false);
+      resetCountdown();
+    },
+  });
+
   const getModalContent = (): TModalContent | null => {
+    if (isUnauthorized) {
+      return {
+        status: 'Вы не авторизованы',
+        description: 'Сейчас вы будете перенаправлены на страницу входа..',
+        countdown,
+      };
+    }
+
     if (order) {
       return {
         status: 'Ваш заказ начали готовить',
@@ -69,11 +111,11 @@ export const PayOrder: FC = () => {
       <UIButton
         type="primary"
         size="large"
-        disabled={!bun}
+        disabled={!bun || loading}
         onClick={handlePayment}
         htmlType="button"
       >
-        {loading ? 'Оформляем заказ' : `Оформить заказ`}
+        {loading ? 'Оформляем заказ...' : `Оформить заказ`}
       </UIButton>
 
       {content && (
@@ -82,9 +124,16 @@ export const PayOrder: FC = () => {
           orderId={content.orderId}
           status={content.status}
           description={content.description}
-          onClose={() => setOpen(false)}
+          countdown={content.countdown}
+          onClose={() => {
+            setOpen(false);
+            setIsUnauthorized(false);
+            resetCountdown();
+          }}
         />
       )}
     </div>
   );
 };
+
+export default PayOrder;

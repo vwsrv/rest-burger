@@ -1,0 +1,5 @@
+.ingredients {
+  display: flex;
+  flex-direction: column;
+  margin-top: var(--spacing-30);
+}

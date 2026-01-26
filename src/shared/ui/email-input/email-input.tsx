@@ -4,16 +4,16 @@ import type { ChangeEvent, FC } from 'react';
 
 type TProps = {
   value: string;
-  size: 'default' | 'small';
+  size?: 'default' | 'small';
   placeholder: string;
-  isIcon: boolean;
-  extraClass: string;
+  isIcon?: boolean;
+  extraClass?: string;
   onChange: (e: ChangeEvent<HTMLInputElement>) => void;
 };
 
 const UIEmailInput: FC<TProps> = ({
   value,
-  size,
+  size = 'default',
   placeholder,
   isIcon,
   extraClass,

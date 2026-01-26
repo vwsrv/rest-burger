@@ -1,5 +1,9 @@
+import { getCookie, setCookie } from '@/entities/user/auth/utils';
 import type { RequestConfig } from '@/shared/error-boundary/types';
 import type { AxiosError, AxiosResponse, InternalAxiosRequestConfig } from 'axios';
+import { getItem, setItem } from '@/shared/utils';
+import { ACCESS_TOKEN_KEY, REFRESH_TOKEN_KEY } from '@/shared/api/constants';
+import { refreshToken } from '@/entities/user/token/api/api.ts';
 
 type ConsoleError = {
   status: number;
@@ -9,11 +13,21 @@ type ConsoleError = {
 export const requestInterceptor = (
   config: InternalAxiosRequestConfig
 ): InternalAxiosRequestConfig => {
-  if ((config as RequestConfig).ignoreXHeaders) {
+  const requestConfig = config as RequestConfig;
+
+  if (requestConfig.ignoreXHeaders) {
     config.headers?.set('Authorization', undefined);
     config.headers?.set('X-Token', undefined);
     config.headers?.set('X-App-Version', undefined);
     config.headers?.set('X-App-Type', undefined);
+    return config;
+  }
+
+  if (requestConfig.requiresAuth) {
+    const token = getCookie(ACCESS_TOKEN_KEY);
+    if (token) {
+      config.headers?.set('Authorization', `Bearer ${token}`);
+    }
   }
 
   return config;
@@ -23,21 +37,40 @@ export const successInterceptor = (response: AxiosResponse): AxiosResponse => {
   return response;
 };
 
-export const errorInterceptor = async (error: AxiosError): Promise<void> => {
-  if (error.response?.status === 401) {
-    await Promise.reject(error);
+export const errorInterceptor = (error: AxiosError): Promise<never> => {
+  if (error.response) {
+    const errorMessage: ConsoleError = {
+      status: error.response.status,
+      data: error.response.data,
+    };
+    console.error(errorMessage);
+  } else if (error.request) {
+    console.error(error.request);
   } else {
-    if (error.response) {
-      const errorMessage: ConsoleError = {
-        status: error.response.status,
-        data: error.response.data,
-      };
-      console.error(errorMessage);
-    } else if (error.request) {
-      console.error(error.request);
-    } else {
-      console.error('Error', error.message);
-    }
-    await Promise.reject(error);
+    console.error('Error', error.message);
   }
+
+  return Promise.reject(error);
+};
+
+export const refreshInterceptor = (failedRequest: AxiosError): Promise<void> => {
+  const refreshTokenValue = getItem<string>(REFRESH_TOKEN_KEY);
+
+  if (!refreshTokenValue) {
+    return Promise.reject(failedRequest);
+  }
+
+  return refreshToken({ token: refreshTokenValue }).then((response) => {
+    setCookie(ACCESS_TOKEN_KEY, response.accessToken, 20);
+    setItem(REFRESH_TOKEN_KEY, response.refreshToken);
+
+    if (failedRequest.config?.headers) {
+      const formattedToken = response.accessToken.startsWith('Bearer ')
+        ? response.accessToken.split('Bearer ')[1]
+        : response.accessToken;
+      failedRequest.config.headers.Authorization = `Bearer ${formattedToken}`;
+    }
+
+    return Promise.resolve();
+  });
 };
