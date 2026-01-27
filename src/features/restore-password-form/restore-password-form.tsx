@@ -9,7 +9,7 @@ const RestorePasswordForm: FC = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const { loading, error } = useAppSelector((state) => state.user);
-  const [email, setEmail] = useState('');
+  const [email, setEmail] = useState<string>('');
 
   useEffect(() => {
     return () => {
