@@ -28,7 +28,7 @@ const ProfileForm: FC = () => {
 
   const isFormValid = profileSchema.isValidSync(profileForm);
 
-  const [validationError, setValidationError] = useState('');
+  const [validationError, setValidationError] = useState<string>('');
 
   const updated = useMemo<TUserInfoRequest>(() => {
     if (!user) return {};

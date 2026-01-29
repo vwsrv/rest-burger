@@ -10,8 +10,8 @@ type TProps = {
 };
 
 const UIModal: FC<TProps> = ({ open, onClose, children }) => {
-  const [animation, setAnimation] = useState(true);
-  const [view, setView] = useState(false);
+  const [animation, setAnimation] = useState<boolean>(true);
+  const [view, setView] = useState<boolean>(false);
 
   useEffect(() => {
     const handleEsc = (event: KeyboardEvent) => {

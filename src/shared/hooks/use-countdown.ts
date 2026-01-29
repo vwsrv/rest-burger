@@ -11,7 +11,7 @@ export const useCountdown = ({
   isActive,
   onComplete,
 }: TUseCountdownParams) => {
-  const [countdown, setCountdown] = useState(initialValue);
+  const [countdown, setCountdown] = useState<number>(initialValue);
 
   useEffect(() => {
     if (!isActive) {
