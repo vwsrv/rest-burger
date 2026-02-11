@@ -20,11 +20,12 @@ const axiosRequestConfig: AxiosRequestConfig = {
 const api: AxiosInstance = axios.create(axiosRequestConfig);
 
 api.interceptors.request.use(requestInterceptor);
-api.interceptors.response.use(successInterceptor, errorInterceptor);
 
 createAuthRefreshInterceptor(api, refreshInterceptor, {
-  statusCodes: [401],
+  statusCodes: [401, 403],
   pauseInstanceWhileRefreshing: true,
 });
+
+api.interceptors.response.use(successInterceptor, errorInterceptor);
 
 export { api };

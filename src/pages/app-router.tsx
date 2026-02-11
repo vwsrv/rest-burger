@@ -1,15 +1,17 @@
 import { Route, Routes } from 'react-router-dom';
-import { IngredientModalProvider, ProtectedRoute } from '@/widgets';
+import { IngredientsDetailsContent, ProtectedRoute } from '@/widgets';
 import { AppHeader } from '@/shared/ui';
 import {
   ForgotPassword,
   Ingredients,
   Login,
-  Profile,
+  ProfilePage,
   Register,
   Main,
   ResetPassword,
 } from '@pages/index.ts';
+import ProfileForm from '@/features/profile-form/profile-form';
+import UserOrders from '@/features/user-orders/user-orders';
 
 const AppRouter = () => {
   return (
@@ -67,13 +69,16 @@ const AppRouter = () => {
           path="/profile"
           element={
             <ProtectedRoute auth={true}>
-              <Profile />
+              <ProfilePage />
             </ProtectedRoute>
           }
-        />
+        >
+          <Route index element={<ProfileForm />} />
+          <Route path="orders" element={<UserOrders />} />
+        </Route>
       </Routes>
 
-      <IngredientModalProvider />
+      <IngredientsDetailsContent />
     </>
   );
 };

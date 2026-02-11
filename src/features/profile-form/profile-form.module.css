@@ -1,26 +1,9 @@
-.profile {
-  display: flex;
-  justify-content: center;
-  gap: var(--spacing-15);
-  margin: 120px;
-}
-
-.profileNavDescription {
-  max-width: 320px;
-  white-space: pre-line;
-  opacity: 0.4;
-}
-
-.profileNav {
-  display: flex;
-  flex-direction: column;
-}
-
 .profileForm {
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: var(--spacing-6);
+  max-width: 480px;
 }
 
 .buttons {

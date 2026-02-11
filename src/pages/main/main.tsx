@@ -4,6 +4,7 @@ import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 import styles from './main.module.css';
 import { RightSide, LeftSide } from '@/widgets';
+import { BurgerConstructor, BurgerIngredients, PayOrder } from '@/features';
 
 export const Main = (): JSX.Element => {
   const location = useLocation();
@@ -23,9 +24,15 @@ export const Main = (): JSX.Element => {
             </section>
 
             <section className={styles.contentSection}>
-              <LeftSide />
+              <LeftSide>
+                <BurgerIngredients />
+              </LeftSide>
 
-              <RightSide />
+              <RightSide>
+                <BurgerConstructor />
+
+                <PayOrder />
+              </RightSide>
             </section>
           </div>
         )}

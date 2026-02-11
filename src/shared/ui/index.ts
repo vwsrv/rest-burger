@@ -1,6 +1,6 @@
 export { default as UIBox } from './box';
 export { default as UIButton } from './button';
-export { default as UICard } from './card';
+export { default as UICard } from './ingredient-card';
 export { default as UIConstructorElement } from './constructor-element';
 export { default as UICounter } from './counter';
 export { default as UIEmailInput } from './email-input';
@@ -10,3 +10,4 @@ export { default as UIPasswordInput } from './password-input';
 export { default as UITab } from './tab';
 export { default as AppHeader } from './app-header';
 export { default as IngredientDetails } from './ingredient-details';
+export { default as UIOrderCard } from './order-card';

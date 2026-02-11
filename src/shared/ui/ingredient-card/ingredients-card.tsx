@@ -1,7 +1,7 @@
 import type { FC } from 'react';
 import { CurrencyIcon } from '@krgaa/react-developer-burger-ui-components';
 
-import styles from './card.module.css';
+import styles from './ingredients-card.module.css';
 import { UIBox, UICounter } from '@/shared/ui';
 
 type TProps = {
@@ -13,7 +13,7 @@ type TProps = {
   onClick?: () => void;
 };
 
-export const UICard: FC<TProps> = ({
+export const UIIngredientsCard: FC<TProps> = ({
   image,
   cost,
   count,
@@ -41,4 +41,4 @@ export const UICard: FC<TProps> = ({
   );
 };
 
-export default UICard;
+export default UIIngredientsCard;

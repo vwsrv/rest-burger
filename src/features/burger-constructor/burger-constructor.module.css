@@ -9,7 +9,6 @@
   max-height: 100%;
   padding-bottom: var(--spacing-10);
   overflow: hidden;
-  color: var(--text-primary-color);
   text-align: center;
 }
 

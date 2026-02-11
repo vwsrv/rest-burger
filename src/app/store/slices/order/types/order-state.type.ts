@@ -1,4 +1,4 @@
-import type { TOrder } from './order.type';
+import type { TOrder } from '@/app/store';
 
 export type TOrderState = {
   order: TOrder | null;

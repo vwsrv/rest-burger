@@ -1,4 +1,4 @@
-export { default as LeftSide } from '@/widgets/ingredients-content/ingredients-content.tsx';
-export { default as RightSide } from '@/widgets/constructor-content/constructor-content.tsx';
+export { default as LeftSide } from '@/widgets/left-side/left-side.tsx';
+export { default as RightSide } from '@/widgets/right-side/right-side.tsx';
 export { default as ProtectedRoute } from './protected-layout';
-export { default as IngredientModalProvider } from './ingredient-modal-provider';
+export { default as IngredientsDetailsContent } from './ingredients-details-content';

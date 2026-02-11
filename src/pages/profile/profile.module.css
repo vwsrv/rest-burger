@@ -1,4 +1,30 @@
 .profile {
   display: flex;
   flex-direction: column;
+  box-sizing: border-box;
+  width: 100%;
+  max-width: 1240px;
+  height: calc(100vh - 220px);
+  margin: 120px auto 0;
+  padding: 0 0 var(--spacing-10);
+  overflow: hidden;
+}
+
+.profileLayout {
+  display: flex;
+  flex: 1;
+  justify-content: space-between;
+  gap: var(--spacing-15);
+  min-height: 0;
+  overflow: hidden;
+}
+
+.profileRightScroll {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+}
+
+.profileRightScroll > * {
+  height: auto;
 }

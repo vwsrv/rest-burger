@@ -21,7 +21,6 @@ const UIButton: FC<TProps> = ({
   disabled,
   children,
 }) => {
-  // Для типа 'none' используем 'secondary'
   const buttonType = type === 'none' ? 'secondary' : type;
 
   return (

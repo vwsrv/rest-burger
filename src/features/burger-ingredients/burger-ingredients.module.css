@@ -3,7 +3,6 @@
   flex-direction: column;
   max-width: 600px;
   height: 100%;
-  color: var(--text-primary-color);
   font-family: 'Jet Brains Mono', serif;
 }
 
