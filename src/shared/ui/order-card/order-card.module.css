@@ -21,6 +21,13 @@
   align-items: center;
 }
 
+.orderCardTextRow {
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  gap: var(--spacing-2);
+}
+
 .orderCard__img_wrapper {
   position: relative;
   display: flex;

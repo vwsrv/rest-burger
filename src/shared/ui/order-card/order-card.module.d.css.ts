@@ -1,6 +1,7 @@
 declare const classNames: {
   readonly orderCard: "orderCard";
   readonly orderCardRow: "orderCardRow";
+  readonly orderCardTextRow: "orderCardTextRow";
   readonly orderCard__img_wrapper: "orderCard__img_wrapper";
   readonly orderCard__img_wrapper_expanded: "orderCard__img_wrapper_expanded";
   readonly orderCard__img_btn_wrap: "orderCard__img_btn_wrap";
