@@ -7,3 +7,4 @@ export { default as ProfileForm } from './profile-form/profile-form';
 export { ProfileNav } from './profile-nav';
 export { default as RestorePasswordForm } from './restore-password-form';
 export { default as ResetPasswordForm } from './reset-password-form';
+export { default as OrderDetails } from './order-details';

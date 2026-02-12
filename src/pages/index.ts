@@ -1,7 +1,8 @@
 export { default as ForgotPassword } from './forgot-password';
 export { default as Ingredients } from './ingredients';
 export { default as Login } from './login';
-export { ProfilePage } from './profile';
+export { default as Profile } from './profile';
 export { default as Register } from './register';
 export { default as Main } from './main';
 export { default as ResetPassword } from './reset-password';
+export { default as OrderDetails } from './order-details';

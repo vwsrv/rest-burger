@@ -3,7 +3,7 @@ import { useParams, useLocation } from 'react-router-dom';
 import { useAppSelector, useAppDispatch } from '@/app/store';
 import { getIngredients } from '@/app/store/slices/ingredients/ingredients.slice.ts';
 import type { TIngredientItem } from '@/entities/ingridients';
-import styles from './ingredients.module.css';
+import styles from './ingredients-page.module.css';
 import { IngredientDetails } from '@/shared/ui';
 
 const Ingredients: FC = () => {
@@ -27,7 +27,7 @@ const Ingredients: FC = () => {
       let foundIngredient: TIngredientItem | null = null;
 
       for (const group of ingredients) {
-        foundIngredient = group.items.find((item) => item.id === id) || null;
+        foundIngredient = group.items.find((item) => item.id === id) ?? null;
         if (foundIngredient) break;
       }
 

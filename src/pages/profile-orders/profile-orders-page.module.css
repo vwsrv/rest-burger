@@ -35,8 +35,6 @@
 
 .leftScroll {
   flex: 1;
-  min-height: 0;
-  overflow-y: auto;
 }
 
 .leftScroll > * {
@@ -45,8 +43,6 @@
 
 .rightScroll {
   flex: 1;
-  min-height: 0;
-  overflow-y: auto;
 }
 
 .rightScroll > * {

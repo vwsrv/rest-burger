@@ -1,6 +1,6 @@
 import type { FC } from 'react';
-import RegisterForm from '@/features/register-form/register-form.tsx';
-import styles from './register.module.css';
+import styles from './register-page.module.css';
+import { RegisterForm } from '@/features';
 
 const Register: FC = () => {
   return (

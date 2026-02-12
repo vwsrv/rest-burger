@@ -1,1 +1,1 @@
-export { default } from './profile-orders.tsx';
+export { default } from './profile-orders-page';

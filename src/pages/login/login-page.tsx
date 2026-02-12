@@ -1,6 +1,6 @@
 import type { FC } from 'react';
-import LoginForm from '@/features/login-form/login-form.tsx';
-import styles from './login.module.css';
+import styles from './login-page.module.css';
+import { LoginForm } from '@/features';
 
 const Login: FC = () => {
   return (

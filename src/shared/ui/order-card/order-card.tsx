@@ -25,6 +25,7 @@ type TProps = {
   status: string;
   statusKey: TOrderStatus;
   images: string[];
+  onClick?: () => void;
 };
 
 export const UIOrderCard: FC<TProps> = ({

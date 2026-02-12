@@ -1,13 +1,9 @@
 import { type FC, useMemo, useEffect } from 'react';
 import { useAppDispatch, useAppSelector, wsConnect, wsDisconnect } from '@/app/store';
 import { getUrl } from '@/app/store/slices/order-feed';
-import { UIOrderCard } from '@/shared/ui';
-import {
-  getIngredientsByIdMap,
-  getOrderDisplayData,
-} from './utils/order-display-data.util';
+import { getIngredientsByIdMap } from '@/shared/utils/order-ingredients.util';
 import styles from './user-orders.module.css';
-import { MOrderStatus } from '@/entities/order';
+import { Card } from './ui';
 
 const UserOrders: FC = () => {
   const dispatch = useAppDispatch();
@@ -30,22 +26,9 @@ const UserOrders: FC = () => {
 
   return (
     <div className={styles.userOrders}>
-      {orders?.map((order) => {
-        const { images, cost } = getOrderDisplayData(order, ingredientsById);
-        return (
-          <UIOrderCard
-            key={order.id}
-            orderId={order.orderNumber}
-            date={order.createdAt}
-            title={order.name}
-            status={MOrderStatus[order.status]}
-            statusKey={order.status}
-            images={images}
-            cost={String(cost)}
-            count={order.ingredients.length}
-          />
-        );
-      })}
+      {orders?.map((order) => (
+        <Card key={order.id} order={order} ingredientsById={ingredientsById} />
+      ))}
     </div>
   );
 };

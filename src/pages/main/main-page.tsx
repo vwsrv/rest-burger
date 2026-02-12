@@ -2,7 +2,7 @@ import type { JSX } from 'react';
 import { Outlet, useLocation } from 'react-router-dom';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
-import styles from './main.module.css';
+import styles from './main-page.module.css';
 import { RightSide, LeftSide } from '@/widgets';
 import { BurgerConstructor, BurgerIngredients, PayOrder } from '@/features';
 

@@ -113,7 +113,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  color: var(--text-primary-color, #f2f2f3);
+  color: #f2f2f3;
   font-size: 16px;
   font-family: 'Jet Brains Mono', monospace;
   line-height: 1.5;
@@ -134,7 +134,7 @@
   height: 100% !important;
   padding: 0 !important;
   overflow: hidden;
-  color: var(--text-primary-color, #f2f2f3);
+  color: #f2f2f3;
   font-size: 16px;
   font-family: 'Jet Brains Mono', monospace;
   line-height: 1.5;

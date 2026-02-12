@@ -1,5 +1,5 @@
 import type { FC } from 'react';
-import styles from './orders.module.css';
+import styles from './profile-orders-page.module.css';
 import { LeftSide, RightSide } from '@/widgets';
 import { Outlet } from 'react-router-dom';
 import UserOrders from '@/features/user-orders/user-orders.tsx';

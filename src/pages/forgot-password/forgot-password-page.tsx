@@ -1,6 +1,6 @@
 import type { FC } from 'react';
-import styles from './forgot-password.module.css';
-import RestorePasswordForm from '@/features/restore-password-form';
+import styles from './forgot-password-page.module.css';
+import { RestorePasswordForm } from '@/features';
 
 const ForgotPassword: FC = () => {
   return (

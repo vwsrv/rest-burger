@@ -4,6 +4,7 @@ import type { TOrderFeedState } from '@/app/store/slices/order-feed/types';
 
 const initialState: TOrderFeedState = {
   orders: null,
+  order: null,
   total: 0,
   totalDay: 0,
   wsConnected: false,
@@ -33,11 +34,20 @@ const orderFeedSlice = createSlice({
     setWsError: (state, action: PayloadAction<string | null>) => {
       state.wsError = action.payload;
     },
+    setOrder: (state, action: PayloadAction<TOrderItem | null>) => {
+      state.order = action.payload;
+    },
     wsConnect: (_, _action: PayloadAction<string>) => {},
     wsDisconnect: () => {},
   },
 });
 
 export default orderFeedSlice.reducer;
-export const { setOrderFeedData, setWsConnected, setWsError, wsConnect, wsDisconnect } =
-  orderFeedSlice.actions;
+export const {
+  setOrderFeedData,
+  setOrder,
+  setWsConnected,
+  setWsError,
+  wsConnect,
+  wsDisconnect,
+} = orderFeedSlice.actions;

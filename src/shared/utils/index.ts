@@ -5,3 +5,4 @@ export * from './group.by.util';
 export * from './get-error-message.util';
 export * from './format-date.util';
 export * from './pluralize.util';
+export * from './order-ingredients.util';
