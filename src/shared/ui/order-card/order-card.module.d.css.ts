@@ -9,7 +9,6 @@ declare const classNames: {
   readonly orderCard__img: "orderCard__img";
   readonly orderCard__img_btn_slideIn: "orderCard__img_btn_slideIn";
   readonly orderCard__img_overlay: "orderCard__img_overlay";
-  readonly orderCard__plus_btn: "orderCard__plus_btn";
   readonly orderCard__price: "orderCard__price";
 };
 export default classNames;

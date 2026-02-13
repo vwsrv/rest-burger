@@ -122,30 +122,10 @@
   cursor: pointer;
 }
 
-.orderCard__plus_btn {
-  position: relative;
-  display: flex !important;
-  flex-shrink: 0;
-  justify-content: center;
-  align-items: center;
-  box-sizing: border-box;
-  width: 100% !important;
-  min-width: 0 !important;
-  height: 100% !important;
-  padding: 0 !important;
-  overflow: hidden;
-  color: #f2f2f3;
-  font-size: 16px;
-  font-family: 'Jet Brains Mono', monospace;
-  line-height: 1.5;
-  background-color: #1c1c21 !important;
-  border: none !important;
-  border-radius: 50% !important;
-  cursor: pointer;
-}
-
 .orderCard__price {
   display: flex;
   align-items: center;
+  align-self: end;
+  gap: var(--spacing-3);
   text-align: center;
 }

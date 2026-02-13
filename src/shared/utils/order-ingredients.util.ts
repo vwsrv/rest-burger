@@ -7,6 +7,7 @@ export type TOrderLineItem = {
   count: number;
   price: number;
   image: string;
+  date: string;
 };
 
 export const getIngredientsByIdMap = (

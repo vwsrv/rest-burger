@@ -4,6 +4,7 @@ import { useAppSelector } from '@/app/store';
 import { getIngredientsByIdMap } from '@/shared/utils/order-ingredients.util';
 import { useIngredients } from '@/shared/hooks';
 import { OrderInfo } from './ui';
+import { formatDate } from '@/shared/utils';
 
 const OrderDetails: FC = () => {
   const { id } = useParams<{ id: string }>();
@@ -27,7 +28,14 @@ const OrderDetails: FC = () => {
 
   if (!order) return null;
 
-  return <OrderInfo order={order} cost={cost} lineItems={lineItems} />;
+  return (
+    <OrderInfo
+      order={order}
+      cost={cost}
+      lineItems={lineItems}
+      date={formatDate(order.updatedAt)}
+    />
+  );
 };
 
 export default OrderDetails;

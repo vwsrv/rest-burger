@@ -9,10 +9,11 @@ import styles from '../../order-details.module.css';
 type TOrderInfoProps = {
   order: TOrderItem;
   cost: number;
+  date: string;
   lineItems: TOrderLineItem[];
 };
 
-export const OrderInfo: FC<TOrderInfoProps> = ({ order, cost, lineItems }) => (
+export const OrderInfo: FC<TOrderInfoProps> = ({ order, cost, date, lineItems }) => (
   <div className={styles.orderDetails}>
     <p className={`${styles.orderDetailsNumber} text_type_digits-default `}>
       #{order.orderNumber}
@@ -54,7 +55,7 @@ export const OrderInfo: FC<TOrderInfoProps> = ({ order, cost, lineItems }) => (
       ))}
     </div>
     <div className={styles.orderDetailsTotal}>
-      <span className="text text_type_main-default text_color_inactive">Итого</span>
+      <p className="text text_type_main-default text_color_inactive">{date}</p>
       <div className={styles.orderDetailsTotalPrice}>
         <span className="text text_type_digits-default">{cost}</span>
         <CurrencyIcon type="primary" />

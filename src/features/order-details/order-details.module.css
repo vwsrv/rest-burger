@@ -88,8 +88,9 @@
 
 .orderDetailsTotal {
   display: flex;
-  justify-content: flex-end;
-  align-items: center;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: end;
   gap: var(--spacing-4);
   padding-top: var(--spacing-10);
 }
