@@ -18,13 +18,3 @@
   min-height: 0;
   overflow: hidden;
 }
-
-.profileRightScroll {
-  flex: 1;
-  min-height: 0;
-  overflow-y: auto;
-}
-
-.profileRightScroll > * {
-  height: auto;
-}

@@ -1,1 +1,1 @@
-export { default as ProfileNav } from './profile-nav';
+export { default } from './profile-nav';

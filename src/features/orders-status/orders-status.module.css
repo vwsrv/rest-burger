@@ -1,0 +1,49 @@
+.ordersStatus {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-15);
+}
+
+.orderStatusColumns {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-9);
+  max-height: 272px;
+  overflow: auto;
+}
+
+.statusRow {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.ordersCountRow {
+  display: flex;
+  flex-direction: column;
+}
+
+.statusColumn {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-6);
+
+  p {
+    padding-right: var(--spacing-6);
+  }
+}
+
+.ordersDigits {
+  text-shadow:
+    0 0 16px #4c4cff,
+    0 0 32px #4c4cff,
+    0 0 48px #4c4cff;
+}
+
+.readyOrders {
+  color: #0cc;
+}
+
+.inProgressOrders {
+  color: inherit;
+}

@@ -1,19 +1,16 @@
 import type { FC } from 'react';
 import styles from './profile-orders-page.module.css';
-import { LeftSide, RightSide } from '@/widgets';
+import { LeftSide, Orders, RightSide } from '@/widgets';
 import { Outlet } from 'react-router-dom';
-import UserOrders from '@/features/user-orders/user-orders.tsx';
 
 const ProfileOrders: FC = () => {
   return (
     <main className={styles.orders}>
       <div className={`${styles.ordersContent} pl-5 pr-5`}>
         <section className={styles.contentSection}>
-          <div className={styles.leftScroll}>
-            <LeftSide>
-              <UserOrders />
-            </LeftSide>
-          </div>
+          <LeftSide>
+            <Orders ordersType="user" />
+          </LeftSide>
 
           <div className={styles.rightScroll}>
             <RightSide>buy world</RightSide>

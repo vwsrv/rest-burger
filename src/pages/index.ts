@@ -6,3 +6,4 @@ export { default as Register } from './register';
 export { default as Main } from './main';
 export { default as ResetPassword } from './reset-password';
 export { default as OrderDetails } from './order-details';
+export { default as FeedPage } from './feed';

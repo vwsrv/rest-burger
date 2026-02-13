@@ -11,9 +11,10 @@ import { useNavigate } from 'react-router-dom';
 type TCardProps = {
   order: TOrderItem;
   ingredientsById: Map<string, TIngredientItem>;
+  className?: string;
 };
 
-export const Card: FC<TCardProps> = ({ order, ingredientsById }) => {
+export const Card: FC<TCardProps> = ({ order, ingredientsById, className }) => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const { images, cost } = useIngredients(order.ingredients, ingredientsById);
@@ -26,6 +27,7 @@ export const Card: FC<TCardProps> = ({ order, ingredientsById }) => {
   return (
     <UIOrderCard
       onClick={handleClick}
+      className={className}
       orderId={order.orderNumber}
       date={order.createdAt}
       title={order.name}

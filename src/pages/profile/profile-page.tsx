@@ -1,12 +1,12 @@
 import type { FC, ReactNode } from 'react';
 import { Outlet, useLocation, useNavigate } from 'react-router-dom';
-import { ProfileNav } from '@/features/profile-nav';
 import { LeftSide, RightSide } from '@/widgets';
 import { useAppDispatch } from '@/app/store';
 import { logoutUserThunk } from '@/app/store/slices/user';
 import { REFRESH_TOKEN_KEY } from '@/shared/api/constants';
 import { getItem } from '@/shared/utils';
 import styles from './profile.module.css';
+import { ProfileNav } from '@/features';
 
 const ProfilePage: FC = () => {
   const location = useLocation();
@@ -54,11 +54,9 @@ const ProfilePage: FC = () => {
         <LeftSide>
           <ProfileNav description={description} onLogout={handleLogout} />
         </LeftSide>
-        <div className={styles.profileRightScroll}>
-          <RightSide>
-            <Outlet />
-          </RightSide>
-        </div>
+        <RightSide>
+          <Outlet />
+        </RightSide>
       </div>
     </main>
   );

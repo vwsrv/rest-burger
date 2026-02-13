@@ -1,0 +1,13 @@
+.feedPage {
+  display: flex;
+  gap: var(--spacing-15);
+  max-width: 1240px;
+  height: calc(100vh - 200px);
+  margin: 100px auto 0;
+  overflow: hidden;
+}
+
+.feedCard {
+  max-width: 584px;
+  padding-right: var(--spacing-6);
+}

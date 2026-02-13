@@ -17,6 +17,7 @@ const SLOT_W = 64;
 const SLOT_GAP = 48;
 
 type TProps = {
+  className?: string;
   orderId: number;
   date: string;
   count: number;
@@ -36,6 +37,7 @@ export const UIOrderCard: FC<TProps> = ({
   status,
   statusKey,
   cost,
+  className,
   ...props
 }) => {
   const { setExpanded, isExpanded, items } = useImagesOrderHook(images, MAX_VISIBLE);
@@ -52,7 +54,7 @@ export const UIOrderCard: FC<TProps> = ({
   );
 
   return (
-    <UIBox className={styles.orderCard} {...props}>
+    <UIBox className={clsx(styles.orderCard, className)} {...props}>
       <div className={styles.orderCardRow}>
         <p className="text text_type_digits-default">#{orderId}</p>
         <p className="text text_type_main-default text_color_inactive">{date}</p>
