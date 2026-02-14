@@ -1,5 +1,11 @@
-import { type FC, useMemo, useEffect } from 'react';
-import { useAppDispatch, useAppSelector, wsConnect, wsDisconnect } from '@/app/store';
+import { type FC, useMemo, useLayoutEffect } from 'react';
+import {
+  getIngredients,
+  useAppDispatch,
+  useAppSelector,
+  wsConnect,
+  wsDisconnect,
+} from '@/app/store';
 import { getUrl } from '@/app/store/slices/order-feed';
 import { getIngredientsByIdMap } from '@/shared/utils/order-ingredients.util.ts';
 import styles from './orders.module.css';
@@ -19,11 +25,16 @@ const Orders: FC<TProps> = ({ ordersType, className }) => {
     [ingredientsGroups]
   );
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     const url = getUrl({ type: ordersType });
     if (url) {
       dispatch(wsConnect(url));
     }
+
+    if (ingredientsGroups.length) {
+      dispatch(getIngredients());
+    }
+
     return () => {
       dispatch(wsDisconnect());
     };
@@ -40,6 +51,7 @@ const Orders: FC<TProps> = ({ ordersType, className }) => {
             key={order.id}
             order={order}
             ingredientsById={ingredientsById}
+            ordersType={ordersType}
           />
         ))}
     </div>

@@ -1,15 +1,13 @@
 import type { FC } from 'react';
 import styles from './orders-status.module.css';
 import { useAppSelector } from '@/app/store';
-import { isToday } from 'date-fns';
 import { clsx } from 'clsx';
 
 const OrdersStatus: FC = () => {
-  const { orders } = useAppSelector((state) => state.orderFeed);
+  const { orders, total, totalDay } = useAppSelector((state) => state.orderFeed);
 
   const readyOrders = orders?.filter((order) => order.status === 'done');
   const inProgressOrders = orders?.filter((order) => order.status === 'pending');
-  const todayOrdersCount = orders?.filter((order) => isToday(new Date(order.createdAt)));
 
   return (
     <div className={styles.ordersStatus}>
@@ -44,14 +42,14 @@ const OrdersStatus: FC = () => {
       <div className={styles.ordersCountRow}>
         <h3 className="text text_type_main-medium">Выполнено за все время:</h3>
         <p className={clsx('text text_type_digits-large', styles.ordersDigits)}>
-          {orders?.length ?? 0}
+          {total}
         </p>
       </div>
 
       <div className={styles.ordersCountRow}>
         <h3 className="text text_type_main-medium">Выполнено за сегодня:</h3>
         <p className={clsx('text text_type_digits-large', styles.ordersDigits)}>
-          {todayOrdersCount?.length ?? 0}
+          {totalDay}
         </p>
       </div>
     </div>

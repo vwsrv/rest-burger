@@ -11,17 +11,27 @@ import { useNavigate } from 'react-router-dom';
 type TCardProps = {
   order: TOrderItem;
   ingredientsById: Map<string, TIngredientItem>;
+  ordersType: 'all' | 'user';
   className?: string;
 };
 
-export const Card: FC<TCardProps> = ({ order, ingredientsById, className }) => {
+export const Card: FC<TCardProps> = ({
+  order,
+  ingredientsById,
+  ordersType,
+  className,
+}) => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const { images, cost } = useIngredients(order.ingredients, ingredientsById);
 
   const handleClick = () => {
     dispatch(setOrder(order));
-    navigate(`/profile/orders/${order.id}`);
+    if (ordersType === 'all') {
+      navigate(`/feed/${order.id}`, { state: { fromFeed: true } });
+    } else {
+      navigate(`/profile/orders/${order.id}`, { state: { fromOrders: true } });
+    }
   };
 
   return (

@@ -2,14 +2,16 @@ import { type FC, type ReactNode, useEffect, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { CloseIcon } from '@krgaa/react-developer-burger-ui-components';
 import styles from './modal.module.css';
+import { clsx } from 'clsx';
 
 type TProps = {
   open: boolean;
   onClose: () => void;
   children: ReactNode;
+  className?: string;
 };
 
-const UIModal: FC<TProps> = ({ open, onClose, children }) => {
+const UIModal: FC<TProps> = ({ open, onClose, children, className }) => {
   const [animation, setAnimation] = useState<boolean>(true);
   const [view, setView] = useState<boolean>(false);
 
@@ -27,6 +29,10 @@ const UIModal: FC<TProps> = ({ open, onClose, children }) => {
     };
   }, [open, onClose]);
 
+  const animationClassName = animation
+    ? styles.content_slide_up
+    : styles.content_slide_down;
+
   useEffect(() => {
     setAnimation(open);
 
@@ -38,18 +44,15 @@ const UIModal: FC<TProps> = ({ open, onClose, children }) => {
   if (!view) return null;
 
   return createPortal(
-    <div
-      onClick={() => onClose()}
-      className={`${styles.overlay} ${animation ? styles.overlay_expand : styles.overlay_collapse}`}
-      onAnimationEnd={() => {
-        if (!animation) {
-          setView(false);
-        }
-      }}
-    >
+    <div onClick={() => onClose()} className={styles.overlay}>
       <div
         onClick={(e) => e.stopPropagation()}
-        className={`${styles.content} ${animation ? styles.content_slide_up : styles.content_slide_down}`}
+        className={clsx(styles.content, className, animationClassName)}
+        onAnimationEnd={() => {
+          if (!animation) {
+            setView(false);
+          }
+        }}
       >
         <button type="button" onClick={() => onClose()} className={styles.close_button}>
           <CloseIcon type="primary" />

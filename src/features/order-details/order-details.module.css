@@ -6,6 +6,11 @@
   overflow: hidden;
 }
 
+.orderDetailsOverlay {
+  max-width: 640px;
+  padding: var(--spacing-25);
+}
+
 .orderDetailsNumber {
   margin: 0;
   padding: 0 0 var(--spacing-10);

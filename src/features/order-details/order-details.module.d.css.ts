@@ -1,5 +1,6 @@
 declare const classNames: {
   readonly orderDetails: "orderDetails";
+  readonly orderDetailsOverlay: "orderDetailsOverlay";
   readonly orderDetailsNumber: "orderDetailsNumber";
   readonly orderDetailsTitle: "orderDetailsTitle";
   readonly orderDetailsTitleRow: "orderDetailsTitleRow";

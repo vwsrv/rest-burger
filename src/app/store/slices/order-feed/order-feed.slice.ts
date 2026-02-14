@@ -37,6 +37,9 @@ const orderFeedSlice = createSlice({
     setOrder: (state, action: PayloadAction<TOrderItem | null>) => {
       state.order = action.payload;
     },
+    clearOrder: (state) => {
+      state.order = null;
+    },
     wsConnect: (_, _action: PayloadAction<string>) => {},
     wsDisconnect: () => {},
   },
@@ -46,6 +49,7 @@ export default orderFeedSlice.reducer;
 export const {
   setOrderFeedData,
   setOrder,
+  clearOrder,
   setWsConnected,
   setWsError,
   wsConnect,

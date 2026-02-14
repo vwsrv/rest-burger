@@ -6,6 +6,7 @@ export {
   setWsError,
   wsConnect,
   wsDisconnect,
+  clearOrder,
 } from './order-feed.slice';
 export { getUrl, type TWsConnectPayload } from './utls/get-url';
 export * from './types';

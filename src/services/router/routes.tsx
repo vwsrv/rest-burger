@@ -1,7 +1,12 @@
 import type { RouteObject } from 'react-router-dom';
 import { createBrowserRouter, Navigate, Outlet } from 'react-router-dom';
 import { AppHeader } from '@/shared/ui';
-import { Orders, ProtectedRoute, IngredientsDetailsContent } from '@/widgets';
+import {
+  Orders,
+  ProtectedRoute,
+  IngredientsDetailsContent,
+  OrderDetailsContent,
+} from '@/widgets';
 import {
   ForgotPassword,
   Ingredients,
@@ -11,8 +16,10 @@ import {
   Main,
   ResetPassword,
   FeedPage,
+  FeedOrderPage,
+  OrderDetails,
 } from '@pages/index.ts';
-import { OrderDetails, ProfileForm } from '@/features';
+import { ProfileForm } from '@/features';
 
 const routes: RouteObject[] = [
   {
@@ -22,6 +29,7 @@ const routes: RouteObject[] = [
         <AppHeader />
         <Outlet />
         <IngredientsDetailsContent />
+        <OrderDetailsContent />
       </>
     ),
     children: [
@@ -29,7 +37,11 @@ const routes: RouteObject[] = [
       { path: 'ingredients/:id', element: <Ingredients /> },
       {
         path: 'feed',
-        element: <FeedPage />,
+        element: <Outlet />,
+        children: [
+          { index: true, element: <FeedPage /> },
+          { path: ':id', element: <FeedOrderPage /> },
+        ],
       },
     ],
   },
@@ -68,9 +80,12 @@ const routes: RouteObject[] = [
   {
     path: '/profile',
     element: (
-      <ProtectedRoute auth={true}>
-        <Profile />
-      </ProtectedRoute>
+      <>
+        <ProtectedRoute auth={true}>
+          <Profile />
+        </ProtectedRoute>
+        <OrderDetailsContent />
+      </>
     ),
     children: [
       { index: true, element: <ProfileForm /> },

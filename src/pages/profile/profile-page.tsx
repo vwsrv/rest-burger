@@ -51,9 +51,11 @@ const ProfilePage: FC = () => {
   return (
     <main className={styles.profile}>
       <div className={styles.profileLayout}>
-        <LeftSide>
-          <ProfileNav description={description} onLogout={handleLogout} />
-        </LeftSide>
+        <div className={styles.profileLeftSide}>
+          <LeftSide>
+            <ProfileNav description={description} onLogout={handleLogout} />
+          </LeftSide>
+        </div>
         <RightSide>
           <Outlet />
         </RightSide>
