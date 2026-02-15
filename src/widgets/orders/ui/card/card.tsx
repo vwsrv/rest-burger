@@ -6,7 +6,7 @@ import type { TOrderItem } from '@/entities/order';
 import type { TIngredientItem } from '@/entities/ingridients';
 import { useAppDispatch } from '@/app/store';
 import { setOrder } from '@/app/store/slices/order-feed';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 type TCardProps = {
   order: TOrderItem;
@@ -23,14 +23,19 @@ export const Card: FC<TCardProps> = ({
 }) => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
+  const location = useLocation();
   const { images, cost } = useIngredients(order.ingredients, ingredientsById);
 
   const handleClick = () => {
     dispatch(setOrder(order));
     if (ordersType === 'all') {
-      navigate(`/feed/${order.id}`, { state: { fromFeed: true } });
+      navigate(`/feed/${order.id}`, {
+        state: { fromFeed: true, backgroundLocation: location },
+      });
     } else {
-      navigate(`/profile/orders/${order.id}`, { state: { fromOrders: true } });
+      navigate(`/profile/orders/${order.id}`, {
+        state: { fromOrders: true, backgroundLocation: location },
+      });
     }
   };
 

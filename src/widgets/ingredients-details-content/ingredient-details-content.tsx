@@ -1,51 +1,42 @@
-import { type FC, useEffect } from 'react';
-import { useLocation } from 'react-router-dom';
+import type { FC } from 'react';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { DetailsModal } from '@/features/burger-ingredients/ui';
 import { useAppSelector, useAppDispatch } from '@/app/store';
-import {
-  clearIngredientItem,
-  setIngredientItem,
-} from '@/app/store/slices/current-ingredient';
+import { clearIngredientItem } from '@/app/store/slices/current-ingredient';
+import type { TIngredientItem } from '@/entities/ingridients';
+
+const findIngredientById = (
+  groups: { items: TIngredientItem[] }[],
+  id: string
+): TIngredientItem | null => {
+  for (const group of groups) {
+    const found = group.items.find((item) => item.id === id);
+    if (found) return found;
+  }
+  return null;
+};
 
 const IngredientDetailsContent: FC = () => {
   const location = useLocation();
+  const navigate = useNavigate();
   const dispatch = useAppDispatch();
+  const { id } = useParams();
   const currentIngredient = useAppSelector((state) => state.currentIngredient.item);
-  const ingredients = useAppSelector((state) => state.ingredients.items);
+  const ingredientsGroups = useAppSelector((state) => state.ingredients.items);
 
-  const ingredientMatch = location.pathname.match(/^\/ingredients\/(.+)$/);
-  const ingredientId = ingredientMatch?.[1];
-  const showModal = ingredientId && location.state?.fromMainPage;
+  const ingredient =
+    currentIngredient ?? (id ? findIngredientById(ingredientsGroups, id) : null);
 
-  useEffect(() => {
-    if (!showModal) {
-      currentIngredient && dispatch(clearIngredientItem());
-      return;
-    }
+  const backPath = location.state?.backgroundLocation?.pathname ?? '/';
 
-    if (ingredients.length === 0 || currentIngredient) return;
+  const handleClose = () => {
+    navigate(backPath, { replace: true });
+    dispatch(clearIngredientItem());
+  };
 
-    let found = false;
-    ingredients.forEach((group) => {
-      if (found) return;
+  if (!ingredient) return null;
 
-      const ingredient = group.items.find((item) => item.id === ingredientId);
-
-      if (ingredient) {
-        dispatch(setIngredientItem(ingredient));
-        found = true;
-      }
-    });
-  }, [showModal, ingredientId, ingredients, currentIngredient, dispatch]);
-
-  if (!showModal || !currentIngredient) return null;
-
-  return (
-    <DetailsModal
-      ingredient={currentIngredient}
-      onClose={() => dispatch(clearIngredientItem())}
-    />
-  );
+  return <DetailsModal ingredient={ingredient} onClose={handleClose} />;
 };
 
 export default IngredientDetailsContent;

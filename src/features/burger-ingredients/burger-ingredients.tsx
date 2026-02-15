@@ -2,19 +2,17 @@ import { type FC, useEffect, useRef } from 'react';
 import { BurgerTabs, Ingredient } from './ui';
 import { tabsTuple, type TIngredientItem } from '@/entities/ingridients';
 import styles from './burger-ingredients.module.css';
-import { UIBox } from '@/shared/ui';
-import {
-  getIngredients,
-  setActiveTab,
-} from '@/app/store/slices/ingredients/ingredients.slice.ts';
+import { UIBox, UILoader } from '@/shared/ui';
+import { setActiveTab } from '@/app/store/slices/ingredients/ingredients.slice.ts';
 import { setIngredientItem } from '@/app/store/slices/current-ingredient';
 import { useAppDispatch, useAppSelector } from '@/app/store';
 import { useActiveTab } from './hooks';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 const BurgerIngredients: FC = () => {
   const dispatch = useAppDispatch();
   const ingredients = useAppSelector((state) => state.ingredients.items);
+  const loading = useAppSelector((state) => state.ingredients.loading);
   const activeTab = useAppSelector((state) => state.ingredients.activeTab);
   const containerRef = useRef<HTMLDivElement>(null);
   const headersRef = useRef<Map<string, HTMLHeadingElement>>(new Map());
@@ -37,11 +35,12 @@ const BurgerIngredients: FC = () => {
     }
   };
 
+  const location = useLocation();
   const handleIngredientClick = (ingredient: TIngredientItem) => {
     dispatch(setIngredientItem(ingredient));
 
     navigate(`/ingredients/${ingredient.id}`, {
-      state: { fromMainPage: true },
+      state: { fromMainPage: true, backgroundLocation: location },
       replace: true,
     });
   };
@@ -62,9 +61,15 @@ const BurgerIngredients: FC = () => {
     isEnabled: ingredients.length > 0,
   });
 
-  useEffect(() => {
-    dispatch(getIngredients());
-  }, [dispatch]);
+  if (loading) {
+    return (
+      <div className={styles.burger_ingredients}>
+        <div className={styles.loaderWrap}>
+          <UILoader text="Загрузка ингредиентов..." />
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className={styles.burger_ingredients}>

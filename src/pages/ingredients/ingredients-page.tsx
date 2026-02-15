@@ -1,26 +1,17 @@
 import { type FC, useEffect, useState } from 'react';
-import { useParams, useLocation } from 'react-router-dom';
-import { useAppSelector, useAppDispatch } from '@/app/store';
-import { getIngredients } from '@/app/store/slices/ingredients/ingredients.slice.ts';
+import { useParams } from 'react-router-dom';
+import { useAppSelector } from '@/app/store';
 import type { TIngredientItem } from '@/entities/ingridients';
 import styles from './ingredients-page.module.css';
-import { IngredientDetails } from '@/shared/ui';
+import { IngredientDetails, UILoader } from '@/shared/ui';
 
 const Ingredients: FC = () => {
   const { id } = useParams<{ id: string }>();
 
-  const location = useLocation();
-
-  const dispatch = useAppDispatch();
   const ingredients = useAppSelector((state) => state.ingredients.items);
+  const loading = useAppSelector((state) => state.ingredients.loading);
 
   const [ingredient, setIngredient] = useState<TIngredientItem | null>(null);
-
-  useEffect(() => {
-    if (ingredients.length === 0) {
-      dispatch(getIngredients());
-    }
-  }, [dispatch, ingredients.length]);
 
   useEffect(() => {
     if (id && ingredients.length > 0) {
@@ -35,14 +26,18 @@ const Ingredients: FC = () => {
     }
   }, [id, ingredients]);
 
-  if (location.state?.fromMainPage === true) {
-    return null;
+  if (id && loading) {
+    return (
+      <div className={styles.ingredients}>
+        <UILoader />
+      </div>
+    );
   }
 
   if (!ingredient) {
     return (
       <div className={styles.ingredients}>
-        <p>Ингредиент не найден</p>
+        <p className="text text_type_main-default">Ингредиент не найден</p>
       </div>
     );
   }

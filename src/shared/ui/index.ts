@@ -11,4 +11,5 @@ export { default as UITab } from './tab';
 export { default as AppHeader } from './app-header';
 export { default as IngredientDetails } from './ingredient-details';
 export { default as UIOrderCard } from './order-card';
+export { default as UILoader } from './loader';
 export { default as Placeholder } from './placeholder';

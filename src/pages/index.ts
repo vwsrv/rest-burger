@@ -7,4 +7,7 @@ export { default as Main } from './main';
 export { default as ResetPassword } from './reset-password';
 export { default as OrderDetails } from './order-details';
 export { default as FeedPage } from './feed';
-export { default as FeedOrderPage } from './feed/feed-order-page';
+export { default as FeedOrderDetails } from './feed-order';
+export { default } from './layout';
+export { default as IngredientDetailsPage } from './ingredient-details';
+export { default as ProfileOrderDetails } from './profile-order';

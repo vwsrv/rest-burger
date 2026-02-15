@@ -8,32 +8,37 @@ import { getItem } from '@/shared/utils';
 import styles from './profile.module.css';
 import { ProfileNav } from '@/features';
 
+const isProfileOrderDetailsPath = (pathname: string): boolean =>
+  /^\/profile\/orders\/[^/]+$/.test(pathname);
+
 const ProfilePage: FC = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
 
+  const isDirectOrderPage =
+    isProfileOrderDetailsPath(location.pathname) && !location.state?.backgroundLocation;
+
   const getProfileDescription = (pathname: string): ReactNode | undefined => {
-    switch (pathname) {
-      case '/profile':
-        return (
-          <>
-            В этом разделе вы можете
-            <br />
-            изменить свои персональные данные
-          </>
-        );
-      case '/profile/orders':
-        return (
-          <>
-            В этом разделе вы можете
-            <br />
-            просмотреть свою историю заказов
-          </>
-        );
-      default:
-        return undefined;
+    if (pathname === '/profile') {
+      return (
+        <>
+          В этом разделе вы можете
+          <br />
+          изменить свои персональные данные
+        </>
+      );
     }
+    if (pathname === '/profile/orders' || pathname.startsWith('/profile/orders/')) {
+      return (
+        <>
+          В этом разделе вы можете
+          <br />
+          просмотреть свою историю заказов
+        </>
+      );
+    }
+    return undefined;
   };
 
   const description = getProfileDescription(location.pathname);
@@ -47,6 +52,14 @@ const ProfilePage: FC = () => {
         navigate('/login');
       });
   };
+
+  if (isDirectOrderPage) {
+    return (
+      <main className={styles.profile}>
+        <Outlet />
+      </main>
+    );
+  }
 
   return (
     <main className={styles.profile}>

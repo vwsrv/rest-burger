@@ -1,4 +1,4 @@
-import { type FC, type FormEvent, useEffect, useMemo, useState } from 'react';
+import { type FC, type FormEvent, useLayoutEffect, useMemo, useState } from 'react';
 import { Input } from '@krgaa/react-developer-burger-ui-components';
 import { UIButton, UIEmailInput, UIPasswordInput } from '@/shared/ui';
 import styles from './profile-form.module.css';
@@ -22,8 +22,6 @@ const ProfileForm: FC = () => {
     password: '',
   });
 
-  const isFormValid = profileSchema.isValidSync(profileForm);
-
   const [validationError, setValidationError] = useState<string>('');
 
   const updated = useMemo<TUserInfoRequest>(() => {
@@ -35,8 +33,6 @@ const ProfileForm: FC = () => {
       ...(profileForm.password && { password: profileForm.password }),
     };
   }, [profileForm, user]);
-
-  const isFieldsEdit = Object.keys(updated).length > 0;
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -70,7 +66,14 @@ const ProfileForm: FC = () => {
     setValidationError('');
   };
 
-  useEffect(() => {
+  const hasChanges =
+    profileForm.name !== user?.name ||
+    profileForm.email !== user?.email ||
+    profileForm.password !== '';
+
+  const isFormValid = profileSchema.isValidSync(profileForm);
+
+  useLayoutEffect(() => {
     if (user) {
       setProfileForm({
         name: user.name,
@@ -80,7 +83,7 @@ const ProfileForm: FC = () => {
     }
   }, [user]);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     dispatch(getUserInfoThunk());
 
     return () => {
@@ -117,27 +120,29 @@ const ProfileForm: FC = () => {
         </p>
       )}
 
-      <div className={styles.buttons}>
-        <UIButton
-          type="none"
-          size="medium"
-          htmlType="button"
-          onClick={handleCancel}
-          disabled={!isFieldsEdit}
-          className={`text text_type_main-default text_color_inactive ${styles.cancelButton}`}
-        >
-          Отмена
-        </UIButton>
+      {hasChanges && (
+        <div className={styles.buttons}>
+          <UIButton
+            type="none"
+            size="medium"
+            htmlType="button"
+            onClick={handleCancel}
+            disabled={isFormValid}
+            className={`text text_type_main-default text_color_inactive ${styles.cancelButton}`}
+          >
+            Отмена
+          </UIButton>
 
-        <UIButton
-          type="primary"
-          size="medium"
-          htmlType="submit"
-          disabled={!isFormValid || saving}
-        >
-          {saving ? 'Сохраняем...' : 'Сохранить'}
-        </UIButton>
-      </div>
+          <UIButton
+            type="primary"
+            size="medium"
+            htmlType="submit"
+            disabled={!hasChanges || saving}
+          >
+            {saving ? 'Сохраняем...' : 'Сохранить'}
+          </UIButton>
+        </div>
+      )}
     </form>
   );
 };

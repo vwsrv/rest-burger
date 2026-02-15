@@ -1,4 +1,5 @@
 declare const classNames: {
+  readonly loaderCell: "loaderCell";
   readonly ordersStatus: "ordersStatus";
   readonly orderStatusColumns: "orderStatusColumns";
   readonly statusRow: "statusRow";

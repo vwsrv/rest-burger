@@ -1,4 +1,5 @@
 declare const classNames: {
+  readonly loaderWrap: "loaderWrap";
   readonly orderDetails: "orderDetails";
   readonly orderDetailsOverlay: "orderDetailsOverlay";
   readonly orderDetailsNumber: "orderDetailsNumber";

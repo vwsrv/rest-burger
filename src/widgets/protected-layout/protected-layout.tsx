@@ -3,7 +3,6 @@ import { getCookie } from '@/entities/user/auth/utils';
 import { Navigate, useLocation } from 'react-router-dom';
 import { getItem } from '@/shared/utils';
 import { ACCESS_TOKEN_KEY, REFRESH_TOKEN_KEY } from '@/shared/api/constants';
-import { AppHeader } from '@/shared/ui';
 
 type TProps = {
   children: ReactNode;
@@ -21,18 +20,14 @@ const ProtectedLayout: FC<TProps> = ({ children, auth }) => {
     if (!isAuthenticated) {
       return <Navigate to="/login" state={{ from: location }} replace />;
     }
-    return (
-      <>
-        <AppHeader />
-        {children}
-      </>
-    );
+    return <>{children}</>;
   }
 
   if (isAuthenticated) {
     return <Navigate to="/" replace />;
   }
-  return children;
+
+  return <>{children}</>;
 };
 
 export default ProtectedLayout;

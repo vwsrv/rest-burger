@@ -1,30 +1,45 @@
 import type { FC } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { useAppDispatch } from '@/app/store';
 import { clearOrder } from '@/app/store/slices/order-feed';
 import { useOrderDetails } from '@/features/order-details/hooks/use-order-details.hook';
 import { OrderDetailsModal } from '@/features/order-details/ui/order-details-modal';
+import { UILoader, UIModal } from '@/shared/ui';
 
 const OrderDetailsContent: FC = () => {
   const location = useLocation();
+  const navigate = useNavigate();
   const dispatch = useAppDispatch();
 
-  const feedMatch = location.pathname.match(/^\/feed\/([^/]+)$/);
-  const profileMatch = location.pathname.match(/^\/profile\/orders\/([^/]+)$/);
+  const { id: orderId } = useParams();
+  const backPath = location.pathname.startsWith('/feed') ? '/feed' : '/profile/orders';
 
-  const orderId = feedMatch?.[1] ?? profileMatch?.[1];
-  const fromFeed = !!location.state?.fromFeed;
-  const fromOrders = !!location.state?.fromOrders;
-
-  const showModal = (!!feedMatch && fromFeed) || (!!profileMatch && fromOrders);
-
-  const { order, cost, lineItems, date } = useOrderDetails(
-    showModal ? orderId : undefined
+  const { order, cost, lineItems, date, isLoading } = useOrderDetails(
+    orderId ?? undefined
   );
 
-  if (!showModal || !order) return null;
+  const handleClose = () => {
+    navigate(location.state?.backgroundLocation?.pathname ?? backPath, {
+      replace: true,
+    });
+    dispatch(clearOrder());
+  };
 
-  const backPath = fromFeed ? '/feed' : '/profile/orders';
+  if (isLoading) {
+    return (
+      <UIModal open onClose={handleClose}>
+        <UILoader />
+      </UIModal>
+    );
+  }
+
+  if (!order) {
+    return (
+      <UIModal open onClose={handleClose}>
+        <p className="text text_type_main-default">Заказ не найден</p>
+      </UIModal>
+    );
+  }
 
   return (
     <OrderDetailsModal
@@ -33,7 +48,7 @@ const OrderDetailsContent: FC = () => {
       lineItems={lineItems}
       date={date}
       backPath={backPath}
-      onClose={() => dispatch(clearOrder())}
+      onClose={handleClose}
     />
   );
 };

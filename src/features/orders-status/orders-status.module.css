@@ -1,3 +1,10 @@
+.loaderCell {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 80px;
+}
+
 .ordersStatus {
   display: flex;
   flex-direction: column;

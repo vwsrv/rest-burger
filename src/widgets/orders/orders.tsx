@@ -1,13 +1,8 @@
 import { type FC, useMemo, useLayoutEffect } from 'react';
-import {
-  getIngredients,
-  useAppDispatch,
-  useAppSelector,
-  wsConnect,
-  wsDisconnect,
-} from '@/app/store';
+import { useAppDispatch, useAppSelector, wsConnect, wsDisconnect } from '@/app/store';
 import { getUrl } from '@/app/store/slices/order-feed';
 import { getIngredientsByIdMap } from '@/shared/utils/order-ingredients.util.ts';
+import { UILoader } from '@/shared/ui';
 import styles from './orders.module.css';
 import { Card } from './ui';
 
@@ -31,14 +26,18 @@ const Orders: FC<TProps> = ({ ordersType, className }) => {
       dispatch(wsConnect(url));
     }
 
-    if (ingredientsGroups.length) {
-      dispatch(getIngredients());
-    }
-
     return () => {
       dispatch(wsDisconnect());
     };
   }, []);
+
+  if (orders === null) {
+    return (
+      <div className={styles.loaderWrap}>
+        <UILoader text="Загрузка заказов..." />
+      </div>
+    );
+  }
 
   return (
     <div className={styles.userOrders}>
