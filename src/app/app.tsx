@@ -1,7 +1,7 @@
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import ErrorBoundary from '@/shared/error-boundary/error.boundary.tsx';
-import './styles/style.module.css';
+import './styles/global.css';
 import { Provider } from 'react-redux';
 import { store } from '@/app/store';
 import { RouterProvider } from 'react-router-dom';
