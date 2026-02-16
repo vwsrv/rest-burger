@@ -1,0 +1,115 @@
+.loaderWrap {
+  display: flex;
+  flex: 1;
+  justify-content: center;
+  align-items: center;
+  min-height: 200px;
+}
+
+.orderDetails {
+  display: flex;
+  flex-direction: column;
+  min-width: 640px;
+  margin: 0 auto;
+  overflow: hidden;
+}
+
+.orderDetailsOverlay {
+  max-width: 640px;
+  padding: var(--spacing-25);
+}
+
+.orderDetailsNumber {
+  margin: 0;
+  padding: 0 0 var(--spacing-10);
+  text-align: center;
+}
+
+.orderDetailsTitle {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-3);
+  padding: 0 0 var(--spacing-15);
+}
+
+.orderDetailsTitleRow {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--spacing-2);
+}
+
+.orderIngredients {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-4);
+  max-height: 312px;
+  padding-top: var(--spacing-6);
+  overflow-y: auto;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.orderIngredientRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: var(--spacing-4);
+}
+
+.orderName {
+  justify-self: start;
+  width: 100%;
+}
+
+.orderIngredientImageWrap {
+  display: flex;
+  flex-shrink: 0;
+  justify-content: center;
+  align-items: center;
+  box-sizing: border-box;
+  width: 64px;
+  height: 64px;
+  padding: 2px;
+  background: linear-gradient(63.18deg, #801ab2, #4c4cff);
+  border-radius: 50%;
+}
+
+.orderIngredientImage {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  background-color: #1c1c21;
+  border-radius: 50%;
+}
+
+.orderIngredientCount {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.orderIngredientPrice {
+  display: flex;
+  justify-content: end;
+  align-items: center;
+  gap: var(--spacing-2);
+  width: 100%;
+  min-width: 80px;
+}
+
+.orderDetailsTotal {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: end;
+  gap: var(--spacing-4);
+  padding-top: var(--spacing-10);
+}
+
+.orderDetailsTotalPrice {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-2);
+}

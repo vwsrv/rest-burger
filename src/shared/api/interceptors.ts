@@ -1,9 +1,17 @@
-import { getCookie, setCookie } from '@/entities/user/auth/utils';
+import { deleteCookie, getCookie, setCookie } from '@/entities/user/auth/utils';
 import type { RequestConfig } from '@/shared/error-boundary/types';
 import type { AxiosError, AxiosResponse, InternalAxiosRequestConfig } from 'axios';
-import { getItem, setItem } from '@/shared/utils';
+import { getItem, removeItem, setItem } from '@/shared/utils';
 import { ACCESS_TOKEN_KEY, REFRESH_TOKEN_KEY } from '@/shared/api/constants';
 import { refreshToken } from '@/entities/user/token/api/api.ts';
+
+export const AUTH_SESSION_EXPIRED_EVENT = 'auth:session-expired';
+
+const clearAuthStorage = (): void => {
+  deleteCookie(ACCESS_TOKEN_KEY);
+  removeItem(REFRESH_TOKEN_KEY);
+  window.dispatchEvent(new CustomEvent(AUTH_SESSION_EXPIRED_EVENT));
+};
 
 type ConsoleError = {
   status: number;
@@ -57,20 +65,26 @@ export const refreshInterceptor = (failedRequest: AxiosError): Promise<void> => 
   const refreshTokenValue = getItem<string>(REFRESH_TOKEN_KEY);
 
   if (!refreshTokenValue) {
+    clearAuthStorage();
     return Promise.reject(failedRequest);
   }
 
-  return refreshToken({ token: refreshTokenValue }).then((response) => {
-    setCookie(ACCESS_TOKEN_KEY, response.accessToken, 20);
-    setItem(REFRESH_TOKEN_KEY, response.refreshToken);
+  return refreshToken({ token: refreshTokenValue })
+    .then((response) => {
+      setCookie(ACCESS_TOKEN_KEY, response.accessToken, 20);
+      setItem(REFRESH_TOKEN_KEY, response.refreshToken);
 
-    if (failedRequest.config?.headers) {
-      const formattedToken = response.accessToken.startsWith('Bearer ')
-        ? response.accessToken.split('Bearer ')[1]
-        : response.accessToken;
-      failedRequest.config.headers.Authorization = `Bearer ${formattedToken}`;
-    }
+      if (failedRequest.config?.headers) {
+        const formattedToken = response.accessToken.startsWith('Bearer ')
+          ? response.accessToken.split('Bearer ')[1]
+          : response.accessToken;
+        failedRequest.config.headers.Authorization = `Bearer ${formattedToken}`;
+      }
 
-    return Promise.resolve();
-  });
+      return Promise.resolve();
+    })
+    .catch(() => {
+      clearAuthStorage();
+      return Promise.reject(failedRequest);
+    });
 };

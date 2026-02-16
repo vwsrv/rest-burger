@@ -1,1 +1,1 @@
-export { default } from './ingredients';
+export { default } from './ingredients-page';

@@ -1,4 +1,5 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import type { AxiosError } from 'axios';
 import { loginUser, logoutUser, registerUser } from '@/entities/user/auth/api';
 import type {
   TLoginRequest,
@@ -7,6 +8,7 @@ import type {
 } from '@/entities/user/auth/models';
 import { deleteCookie, setCookie } from '@/entities/user/auth/utils';
 import { ACCESS_TOKEN_KEY, REFRESH_TOKEN_KEY } from '@/shared/api/constants';
+import { TOKEN_MIN_EXPIRATION } from '@/shared/constants';
 import { removeItem, setItem } from '@/shared/utils';
 import { editUserInfo, getUserInfo } from '@/entities/user/profile/api';
 import type { TUserInfoRequest } from '@/entities/user/profile/models/types';
@@ -25,6 +27,7 @@ type TUserState = {
   user: TUser | null;
   isAuthenticated: boolean;
   loading: boolean;
+  saving: boolean;
   error: string | null;
 };
 
@@ -32,6 +35,7 @@ const initialState: TUserState = {
   user: null,
   isAuthenticated: false,
   loading: false,
+  saving: false,
   error: null,
 };
 
@@ -39,7 +43,7 @@ export const registerUserThunk = createAsyncThunk(
   'user/register',
   (data: TRegisterRequest) => {
     return registerUser(data).then((response) => {
-      setCookie(ACCESS_TOKEN_KEY, response.accessToken, 20);
+      setCookie(ACCESS_TOKEN_KEY, response.accessToken, TOKEN_MIN_EXPIRATION);
       setItem(REFRESH_TOKEN_KEY, response.refreshToken);
 
       return {
@@ -52,7 +56,7 @@ export const registerUserThunk = createAsyncThunk(
 
 export const loginUserThunk = createAsyncThunk('user/login', (data: TLoginRequest) => {
   return loginUser(data).then((response) => {
-    setCookie(ACCESS_TOKEN_KEY, response.accessToken, 20);
+    setCookie(ACCESS_TOKEN_KEY, response.accessToken, TOKEN_MIN_EXPIRATION);
     setItem(REFRESH_TOKEN_KEY, response.refreshToken);
 
     return {
@@ -72,14 +76,22 @@ export const logoutUserThunk = createAsyncThunk(
   }
 );
 
-export const getUserInfoThunk = createAsyncThunk('user/info', () => {
-  return getUserInfo().then((response) => {
-    return {
-      email: response.user.email,
-      name: response.user.name,
-    };
-  });
-});
+export const getUserInfoThunk = createAsyncThunk(
+  'user/info',
+  (_, { rejectWithValue }) => {
+    return getUserInfo()
+      .then((response) => ({
+        email: response.user.email,
+        name: response.user.name,
+      }))
+      .catch((err: AxiosError) => {
+        throw rejectWithValue({
+          message: err.message,
+          status: err.response?.status,
+        });
+      });
+  }
+);
 
 export const editUserInfoThink = createAsyncThunk(
   'user/edit',
@@ -131,6 +143,7 @@ const userSlice = createSlice({
 
     clearError: (state) => {
       state.loading = false;
+      state.saving = false;
       state.error = null;
     },
   },
@@ -191,21 +204,25 @@ const userSlice = createSlice({
       })
       .addCase(getUserInfoThunk.rejected, (state, action) => {
         state.loading = false;
+        const status = (action.payload as { status?: number } | undefined)?.status;
+        if (status === 401) return;
         state.error =
-          action.error.message || 'Ошибка при получении данных о пользователе';
+          (action.payload as { message?: string } | undefined)?.message ||
+          action.error.message ||
+          'Ошибка при получении данных о пользователе';
       })
 
       .addCase(editUserInfoThink.pending, (state) => {
-        state.loading = true;
+        state.saving = true;
         state.error = null;
       })
       .addCase(editUserInfoThink.fulfilled, (state, action) => {
-        state.loading = false;
+        state.saving = false;
         state.user = action.payload;
         state.error = null;
       })
       .addCase(editUserInfoThink.rejected, (state, action) => {
-        state.loading = false;
+        state.saving = false;
         state.error =
           action.error.message || 'Ошибка при изменении данных о пользователе';
       })

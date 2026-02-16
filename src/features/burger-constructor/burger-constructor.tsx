@@ -1,7 +1,7 @@
 import styles from './burger-constructor.module.css';
 import type { FC } from 'react';
 import { useDrop } from 'react-dnd';
-import { UIBox, UIConstructorElement } from '@/shared/ui';
+import { Placeholder, UIBox, UIConstructorElement } from '@/shared/ui';
 import { useAppDispatch, useAppSelector } from '@/app/store';
 import {
   addIngredient,
@@ -11,7 +11,6 @@ import {
 } from '@/app/store/slices/burger-constructor/burger-constructor.slice.ts';
 import type { TIngredientItem } from '@/entities/ingridients';
 import { ConstructorItem } from './ui/constructor-item';
-import { Placeholder } from './ui/placeholder';
 
 const BurgerConstructor: FC = () => {
   const dispatch = useAppDispatch();

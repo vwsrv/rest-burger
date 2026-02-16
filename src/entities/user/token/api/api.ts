@@ -2,16 +2,16 @@ import type {
   TRefreshTokenRequest,
   TRefreshTokenResponse,
 } from '@/entities/user/token/models';
-import { api } from '@/shared/api';
+import axios from 'axios';
 
-export const refreshToken = async (
+export const refreshToken = (
   data: TRefreshTokenRequest
 ): Promise<TRefreshTokenResponse> => {
-  return api
-    .post('/api/auth/token', data, {
-      baseURL: import.meta.env.SERVICE_BURGER_API,
-    })
-    .then((res) => {
-      return res.data;
-    });
+  return axios
+    .post<TRefreshTokenResponse>(
+      `${import.meta.env.SERVICE_BURGER_API}/api/auth/token`,
+      data,
+      { headers: { 'Content-Type': 'application/json' } }
+    )
+    .then((res) => res.data);
 };

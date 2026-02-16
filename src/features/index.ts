@@ -4,5 +4,8 @@ export { default as PayOrder } from './pay-order/pay-order';
 export { default as LoginForm } from './login-form/login-form';
 export { default as RegisterForm } from './register-form/register-form';
 export { default as ProfileForm } from './profile-form/profile-form';
+export { default as ProfileNav } from './profile-nav';
 export { default as RestorePasswordForm } from './restore-password-form';
 export { default as ResetPasswordForm } from './reset-password-form';
+export { default as OrderDetails } from './order-details';
+export { default as OrdersStatus } from './orders-status';

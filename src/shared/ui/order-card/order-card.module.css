@@ -1,0 +1,131 @@
+.orderCard {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-6);
+  max-width: 856px;
+  max-height: 246px;
+  padding: var(--spacing-6);
+  background-color: #1c1c21;
+  border-radius: var(--spacing-10);
+  cursor: pointer;
+  transition: ease-in-out;
+
+  p {
+    text-align: center;
+  }
+}
+
+.orderCardRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.orderCardTextRow {
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  gap: var(--spacing-2);
+}
+
+.orderCard__img_wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 0;
+  max-width: 304px;
+  overflow: hidden;
+  transition: max-width 0.3s ease-out;
+}
+
+.orderCard__img_wrapper_expanded {
+  max-width: 2000px;
+}
+
+.orderCard__img_btn_wrap {
+  position: relative;
+  display: flex;
+  flex-shrink: 0;
+  justify-content: center;
+  align-items: center;
+  box-sizing: border-box;
+  width: 64px;
+  height: 64px;
+  margin-left: -16px;
+  padding: 2px;
+  background: linear-gradient(63.18deg, #801ab2, #4c4cff);
+  border-radius: 50%;
+  isolation: isolate;
+}
+
+.orderCard__img_btn_wrap:first-of-type {
+  margin-left: 0;
+}
+
+.orderCard__img_btn {
+  position: relative;
+  display: flex !important;
+  flex-shrink: 0;
+  justify-content: center;
+  align-items: center;
+  box-sizing: border-box;
+  width: 100% !important;
+  min-width: 0 !important;
+  height: 100% !important;
+  padding: 0 !important;
+  overflow: hidden;
+  background-color: #1c1c21 !important;
+  border: none !important;
+  border-radius: 50% !important;
+  cursor: pointer;
+
+  &:active {
+    transform: translateY(-2px);
+  }
+}
+
+.orderCard__img_btn .orderCard__img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.orderCard__img_btn_slideIn {
+  animation: orderCardSlideIn 0.3s ease-out forwards;
+}
+
+@keyframes orderCardSlideIn {
+  from {
+    transform: translateX(-100%);
+    opacity: 0;
+  }
+
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+.orderCard__img_overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #f2f2f3;
+  font-size: 16px;
+  font-family: 'Jet Brains Mono', monospace;
+  line-height: 1.5;
+  background: rgb(28 28 33 / 60%);
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.orderCard__price {
+  display: flex;
+  align-items: center;
+  align-self: end;
+  gap: var(--spacing-3);
+  text-align: center;
+}
