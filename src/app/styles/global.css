@@ -63,3 +63,17 @@ a {
     transition: opacity 0.3s ease;
   }
 }
+
+* {
+  user-select: none;
+  user-select: none;
+  user-select: none;
+  user-select: none;
+}
+
+input,
+textarea,
+select,
+button {
+  user-select: text;
+}
