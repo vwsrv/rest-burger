@@ -24,10 +24,10 @@ const RootLayout = () => {
   }, [dispatch, navigate]);
 
   return (
-    <>
+    <div className="app">
       <AppHeader />
       <Outlet />
-    </>
+    </div>
   );
 };
 
