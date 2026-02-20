@@ -1,6 +1,7 @@
 # React Burger Constructor
 
 Веб-приложение для сборки бургеров с использованием drag-and-drop интерфейса.
+Деплой доступен по ссылке: https://restburger.nomorepartiessbs.ru/
 
 ## Технологии
 

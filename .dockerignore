@@ -1,0 +1,12 @@
+node_modules
+dist
+.git
+.github
+*.md
+.env*
+.env.*
+coverage
+.cypress
+cypress
+*.log
+.DS_Store

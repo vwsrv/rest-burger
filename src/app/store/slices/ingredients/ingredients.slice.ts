@@ -1,6 +1,7 @@
-import { createAsyncThunk, createSlice, type PayloadAction } from '@reduxjs/toolkit';
-import { getIngredientsData, groupIngredients } from '@/entities/ingridients';
+import { createSlice, type PayloadAction } from '@reduxjs/toolkit';
+import { addAsyncThunkCases } from '@/app/store/utils';
 import type { TIngredientsState } from './types';
+import { getIngredients } from './thunks';
 
 const initialState: TIngredientsState = {
   items: [],
@@ -8,10 +9,6 @@ const initialState: TIngredientsState = {
   loading: false,
   error: null,
 };
-
-export const getIngredients = createAsyncThunk('ingredients/getIngredients', () =>
-  getIngredientsData().then(groupIngredients)
-);
 
 const ingredientsSlice = createSlice({
   name: 'ingredients',
@@ -25,22 +22,15 @@ const ingredientsSlice = createSlice({
     },
   },
   extraReducers: (builder) => {
-    builder
-      .addCase(getIngredients.pending, (state) => {
-        state.loading = true;
-        state.error = null;
-      })
-      .addCase(getIngredients.fulfilled, (state, action) => {
-        state.loading = false;
-        state.items = action.payload;
-        state.error = null;
-      })
-      .addCase(getIngredients.rejected, (state, action) => {
-        state.loading = false;
-        state.error = action.error.message || 'Something went wrong';
-      });
+    addAsyncThunkCases(builder, getIngredients, {
+      rejectMessage: 'Something went wrong',
+      setPayload: (state, payload) => {
+        state.items = payload;
+      },
+    });
   },
 });
 
 export default ingredientsSlice.reducer;
 export const { setIngredients, setActiveTab } = ingredientsSlice.actions;
+export { getIngredients } from './thunks';

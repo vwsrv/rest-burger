@@ -1,20 +1,17 @@
 import { defineConfig } from 'cypress';
-import { fileURLToPath } from 'node:url';
-import path from 'node:path';
-
-const __dirname = path.dirname(fileURLToPath(import.meta.url));
+import * as path from 'node:path';
 
 export default defineConfig({
   e2e: {
     baseUrl: 'http://localhost:5173',
-    async setupNodeEvents(_, config) {
+    async setupNodeEvents(on, config) {
       const { register } = await import('ts-node');
       register({
+        project: path.join(process.cwd(), 'cypress/tsconfig.json'),
         transpileOnly: true,
-        project: path.join(__dirname, 'cypress/tsconfig.json'),
-      });
+      } as Record<string, unknown>);
 
       return config;
     },
-  }
+  },
 });

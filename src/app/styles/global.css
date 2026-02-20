@@ -37,6 +37,11 @@ body {
   height: 100vh;
 }
 
+.app > main {
+  flex: 1;
+  min-height: 0;
+}
+
 .title {
   width: 100%;
   max-width: 1260px;
@@ -65,9 +70,6 @@ a {
 }
 
 * {
-  user-select: none;
-  user-select: none;
-  user-select: none;
   user-select: none;
 }
 

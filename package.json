@@ -3,6 +3,7 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
+  "homepage": "./",
   "scripts": {
     "build": "vite build",
     "commit": "cz",
@@ -22,6 +23,7 @@
     "test:ui": "vitest --ui"
   },
   "dependencies": {
+    "@4tw/cypress-drag-drop": "^2.3.1",
     "@babel/runtime": "^7.28.4",
     "@krgaa/react-developer-burger-ui-components": "^1.0.1",
     "@reduxjs/toolkit": "^2.9.0",
@@ -45,13 +47,14 @@
     "@testing-library/jest-dom": "^6.9.0",
     "@testing-library/react": "^16.3.0",
     "@testing-library/user-event": "^14.6.1",
+    "@types/node": "^20.0.0",
     "@types/react": "^19.1.2",
     "@types/react-dom": "^19.1.2",
     "@types/uuid": "^10.0.0",
     "@vitejs/plugin-react": "^5.0.3",
     "@vitest/browser": "^3.2.4",
     "@vitest/ui": "^3.2.4",
-    "commitizen": "^4.3.1",
+    "commitizen": "^4.2.4",
     "cypress": "^15.3.0",
     "cypress-vite": "^1.8.0",
     "cz-conventional-changelog": "^3.3.0",
